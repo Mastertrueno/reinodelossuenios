@@ -1,0 +1,23 @@
+.campo{
+    width: 300px;
+}
+.campo_corto{
+    width: 190px;
+}
+h1{
+    text-align: center;
+}
+/* .apellidos{
+    position: relative;
+    left: 50%;
+    top: 20%;
+} */
+.container2{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.camp{
+    
+    width: 50%;
+}
