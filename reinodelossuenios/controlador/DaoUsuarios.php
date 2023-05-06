@@ -31,13 +31,13 @@ class DaoUsuarios extends DB
             $usu=new Usuario();
             
             
-            $usu->__set("Idusuario", $fila["idusuario"]);
-            $usu->__set("Nombre", $fila["nombre"]);
-            $usu->__set("Contraseña", $fila["contrasenia"]);
-            $usu->__set("Apellidos", $fila["apellidos"]);
-            $usu->__set("Correo", $fila["correo"]);
-            $usu->__set("Telefono", $fila["telefono"]);
-            $usu->__set("Dinero", $fila["dinero"]);
+            $param[":Nombre"]=$fila->__get("nombre");
+        $param[":Apellidos"]=$fila->__get("apellidos");
+        $param[":Contrasenia"]=$fila->__get("contraseña");
+        $param[":Correo"]=$fila->__get("correo");
+        $param[":Fecha"]=$fila->__get("fechanac");
+        $param[":Telefono"]=$fila->__get("telefono");
+        $param[":Dinero"]=$fila->__get("dinero");
             $this->usuarios[]=$usu;   //Añadimos ese usuario al array de objetos
             
         }
@@ -51,15 +51,15 @@ class DaoUsuarios extends DB
     {
         $param=array();
         
-        $param[":Idusuario"]=$usuario->__get("idusuario");
         $param[":Nombre"]=$usuario->__get("nombre");
         $param[":Apellidos"]=$usuario->__get("apellidos");
-        $param[":Contrasenia"]=$usuario->__get("contrasenia");
+        $param[":Contrasenia"]=$usuario->__get("contraseña");
         $param[":Correo"]=$usuario->__get("correo");
+        $param[":Fecha"]=$usuario->__get("fechanac");
         $param[":Telefono"]=$usuario->__get("telefono");
         $param[":Dinero"]=$usuario->__get("dinero");
         
-        $consulta="insert into usuarios values (:Idusuario,:Nombre,:Apellidos,:Contrasenia,:Correo,:Telefono,:Dinero) ";
+        $consulta="insert into usuarios values (null,:Nombre,:Apellidos,:Contrasenia,:Correo,:Fecha,:Telefono,:Dinero) ";
         
         $this->ConsultaSimple($consulta, $param);
         
@@ -84,42 +84,43 @@ class DaoUsuarios extends DB
         
         $param=array();
         $param[":Idusuario"]=$usuario->__get("idusuario");
-        // $param[":Nombre"]=$usuario->__get("nombre");
-        // $param[":Apellidos"]=$usuario->__get("apellidos");
-        $param[":Contrasenia"]=$usuario->__get("contrasenia");
+        $param[":Nombre"]=$usuario->__get("nombre");
+        $param[":Apellidos"]=$usuario->__get("apellidos");
+        $param[":Contraseña"]=$usuario->__get("contraseña");
         $param[":Correo"]=$usuario->__get("correo");
+        $param[":Fecha"]=$usuario->__get("fechanac");
         $param[":Telefono"]=$usuario->__get("telefono");
         $param[":Dinero"]=$usuario->__get("dinero");
         
         $consulta="update usuarios
-                   set contrasenia=:Contrasenia,correo=:Correo,telefono=:Telefono,dinero=:Dinero
-                   where Usuario=:Usuario ";
+                   set contraseña=:Contraseña,correo=:Correo,telefono=:Telefono,dinero=:Dinero
+                   where idusuario=:Idusuario ";
         
         $this->ConsultaSimple($consulta, $param);
     }
     
     
-    public function Obtener($usu)          //Devuelve una objeto usuario a partir de su Nombre
+    public function Obtener($usu)          //Devuelve una objeto usuario a partir de su correo
     {
         $param=array();
-        
         $param[":Correo"]=$usu;
         
-        $consulta="SELECT * FROM usuarios where correo=:correo";
-        
+        $consulta="SELECT * FROM usuarios where correo=:Correo";
+
         $this->ConsultaDatos($consulta, $param);
-        
         if ( count($this->filas)==1 )     //Si devuelve una fila
         {
             $fila=$this->filas[0];
-            
+            echo $this->filas[0]["contraseña"];
+            echo "<br>";
          $usuario=new Usuario();
         
          $usuario->__set("Idusuario", $fila["idusuario"]);
          $usuario->__set("Nombre", $fila["nombre"]);
-         $usuario->__set("Contraseña", $fila["contrasenia"]);
+         $usuario->__set("Contraseña", $fila["contraseña"]);
          $usuario->__set("Apellidos", $fila["apellidos"]);
          $usuario->__set("Correo", $fila["correo"]);
+         $usuario->__set("Fecha", $fila["fechanac"]);
          $usuario->__set("Telefono", $fila["telefono"]);
          $usuario->__set("Dinero", $fila["dinero"]);
         }
@@ -127,7 +128,7 @@ class DaoUsuarios extends DB
         {
          $usuario=NULL;
         }
-        return $usuario;  //Retorna un objeto tipo marca
+        return $usuario;  //Retorna un objeto tipo usuario
         
     }
     

@@ -1,20 +1,26 @@
 <?php
 class Usuario
 {
-    private $Usuario;
-    private $Clave;
+    private $idusuario;
+    private $nombre;
+    private $apellidos;
+    private $contraseña;
+    private $correo;
+    private $dinero;
+    private $telefono;
+    private $fechanac;
     
-    public function __get($nombre)
-    {
-        return $this->$nombre;
+    public function __get($clave)
+    {echo $clave;
+        echo "<br>";
+        return $this->$clave;
     }
     
-    public function __set($nombre,$valor)
+    public function __set($clave,$valor)
     {
-        $this->$nombre=$valor;
+        $this->$clave=$valor;
     }
-    
-    
+
 }
 
 ?>
