@@ -115,14 +115,14 @@ class DaoUsuarios extends DB
             echo "<br>";
          $usuario=new Usuario();
         
-         $usuario->__set("Idusuario", $fila["idusuario"]);
-         $usuario->__set("Nombre", $fila["nombre"]);
-         $usuario->__set("Contraseña", $fila["contraseña"]);
-         $usuario->__set("Apellidos", $fila["apellidos"]);
-         $usuario->__set("Correo", $fila["correo"]);
-         $usuario->__set("Fecha", $fila["fechanac"]);
-         $usuario->__set("Telefono", $fila["telefono"]);
-         $usuario->__set("Dinero", $fila["dinero"]);
+         $usuario->__set("idusuario", $fila["idusuario"]);
+         $usuario->__set("nombre", $fila["nombre"]);
+         $usuario->__set("contraseña", $fila["contraseña"]);
+         $usuario->__set("apellidos", $fila["apellidos"]);
+         $usuario->__set("correo", $fila["correo"]);
+         $usuario->__set("fechanac", $fila["fechanac"]);
+         $usuario->__set("telefono", $fila["telefono"]);
+         $usuario->__set("dinero", $fila["dinero"]);
         }
         else 
         {

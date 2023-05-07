@@ -35,7 +35,7 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
                             <div class="invalid-feedback lang" key="papellidos">
                                 Ponga sus apellidos
                             </div>
@@ -129,6 +129,8 @@
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
                                 $dao->Insertar($usu);
+                                echo "<b> Usuario creado correctamente</b>";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://localhost/reinodelossuenios/inicio.html'> ";
                             }
                         }
                     }

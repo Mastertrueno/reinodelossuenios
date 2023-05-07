@@ -22,7 +22,7 @@ session_start();
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Registrese para continuar</h1>
+            <h1 class="lang" key="registrar">Inicie sesión para continuar</h1>
             <div class="container">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
@@ -68,11 +68,8 @@ session_start();
                         //Comprobamos si el login es correcto
 
                         $usu = $dao->Obtener($correo);
-                        echo $contraseña;
-                        echo "<br>";
 
                         if (($usu == NULL) || ($usu->__get("contraseña") != $contraseña)) {
-                            echo $usu->__get("contraseña") ;
                             echo "<b>ERROR, usuario/contraseña incorrectos </b>";
                         } else {
 

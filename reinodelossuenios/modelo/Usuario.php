@@ -11,8 +11,7 @@ class Usuario
     private $fechanac;
     
     public function __get($clave)
-    {echo $clave;
-        echo "<br>";
+    {
         return $this->$clave;
     }
     
