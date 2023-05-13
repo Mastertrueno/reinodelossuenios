@@ -28,75 +28,57 @@
                             </label>
                             <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,12}" required onchange="fieldsCompleted('nombre')">
                             <div class="invalid-feedback lang" key="pnombre">
-                                Ponga su nombre
+                                Ponga el nombre del producto
                             </div>
                         </div>
-                        <div class="mb-3 apellidos camp">
-                            <label for="apellidos">
-                                <h2 class="lang" key="apellidos">Apellidos </h2>
+                        <div class="mb-3 descripcion camp">
+                            <label for="descripcion">
+                                <h2 class="lang" key="descripcion">Descripcion </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
-                            <div class="invalid-feedback lang" key="papellidos">
-                                Ponga sus apellidos
+                            <textarea  id="descripcion" name="descripcion" type="tex" class="form-control campo">
+                            </textarea>
+                            <div class="invalid-feedback lang" key="pdescripcion">
+                                Ponga sus descripcion
                             </div>
                         </div>
-                        <div class="mb-3 contraseña camp">
-                            <label for="contraseña">
-                                <h2 class="lang" key="contraseña">Contraseña </h2>
+                        <div class="mb-3 precio camp">
+                            <label for="precio">
+                                <h2 class="lang" key="precio">Precio </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
-                            <div class="invalid-feedback lang" key="pcontraseña">
-                                Ponga una contraseña (8 minimo, sin caracteres especiales)
-                            </div>
-                        </div>
-                        <div class="mb-3 contraseña camp">
-                            <label for="contraseña">
-                                <h2 class="lang" key="contraseña">Confirmación Contraseña </h2>
-                            </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
-                            <div class="invalid-feedback lang" key="pcontraseña">
-                                Confirma la contraseña
-                            </div>
-                        </div>
-                        <div class="mb-3 email camp">
-                            <label for="correo">
-                                <h2 class="lang" key="correo">Correo </h2>
-                            </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
-                            <div class="invalid-feedback lang" key="pemail">
-                                Ponga su correo electronico
+                            <input id="precio" name="precio" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <div class="invalid-feedback lang" key="pprecio">
+                                Ponga un precio 
                             </div>
                         </div>
 
-                        <div class="mb-3 telefono camp">
-                            <label for="telefono">
-                                <h2 class="lang" key="Telefono">Telefono</h2>
+                        <div class="mb-3 cantidad camp">
+                            <label for="cantidad">
+                                <h2 class="lang" key="cantidad">Cantidad </h2>
                             </label>
-                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required onchange="fieldsCompleted('telefono')">
-                            <div class="invalid-feedback lang" key="ptelefono">
-                                Ponga su telefono
+                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <div class="invalid-feedback lang" key="pcantidad">
+                                Ponga una cantidad 
                             </div>
                         </div>
-                        <div class="mb-3 fechanac camp">
-                            <label for="fechanac">
-                                <h2 class="lang" key="fecha">Fecha nacimiento </h2>
+                        <div class="mb-3 foto camp">
+                            <label for="foto">
+                                <h2 class="lang" key="fecha">Foto</h2>
                             </label>
-                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('fechanac')">
+                            <input id="foto" name="foto" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('foto')">
                             <div class="invalid-feedback lang" key="pfecha">
                                 Seleccione su fecha de nacimiento
                             </div>
                         </div>
                     </div>
-                    <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
-                    <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
+                    <button type="submit" class="lang" name="Guardar" value="Guardar">Guardar</button>
 
 
                 </form>
                 <?php
                 require_once "controlador/Daousuarios.php";
 
-                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
-                if (isset($_POST["Enviar"])) {
+                $dao = new DaoUsuarios("reinodelossuenios");
+                if (isset($_POST["Guardar"])) {
                     $nombre = $_POST["nombre"];
                     $apellidos = $_POST["apellidos"];
                     $contraseña = $_POST["contraseña"];

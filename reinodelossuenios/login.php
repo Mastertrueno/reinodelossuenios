@@ -52,7 +52,7 @@ session_start();
                 <?php
                 require_once "controlador/Daousuarios.php";
 
-                $dao = new DaoUsuarios("reinodelossuenios");
+                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Entrar"])) {
                     $contraseña = $_POST["contraseña"];
                     $correo = $_POST["correo"];

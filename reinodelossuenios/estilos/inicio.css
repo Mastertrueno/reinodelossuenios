@@ -1,0 +1,21 @@
+.nav_img {
+    margin: 30px;
+    width: 60px;
+    height: 60px;
+    display: block;
+}
+header{
+    height: 150px;
+    background-color: aqua;
+
+}
+main{
+    height: 100%;
+    background-color: bisque;
+}
+footer{
+    position: absolute;
+    background-color: blueviolet;
+    width: 100%;
+    bottom: 0%;
+}

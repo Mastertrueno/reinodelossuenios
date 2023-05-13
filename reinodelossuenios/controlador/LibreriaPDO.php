@@ -6,10 +6,9 @@
 
         private $con; //Propiedad que retorna el objeto PDO resultante de la conexión
 
-        private $host = 'localhost';
-        private $user = 'root';
-        private $pass = '';
-        
+        private $host = 'sql202.epizy.com';
+        private $user = 'epiz_34180798';
+        private $pass = 'mgvDfwkMNt';
         protected $dbname;
 
         public $filas = array();
@@ -23,7 +22,7 @@
             try {
 
                 $pdo = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->pass);
-
+echo "conecta";
                 $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_SILENT);
                 $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
 

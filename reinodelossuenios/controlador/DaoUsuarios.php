@@ -31,13 +31,13 @@ class DaoUsuarios extends DB
             $usu=new Usuario();
             
             
-            $param[":Nombre"]=$fila->__get("nombre");
-        $param[":Apellidos"]=$fila->__get("apellidos");
-        $param[":Contrasenia"]=$fila->__get("contraseña");
-        $param[":Correo"]=$fila->__get("correo");
-        $param[":Fecha"]=$fila->__get("fechanac");
-        $param[":Telefono"]=$fila->__get("telefono");
-        $param[":Dinero"]=$fila->__get("dinero");
+            $param[":nombre"]=$fila->__get("nombre");
+        $param[":apellidos"]=$fila->__get("apellidos");
+        $param[":contrasenia"]=$fila->__get("contraseña");
+        $param[":correo"]=$fila->__get("correo");
+        $param[":fecha"]=$fila->__get("fechanac");
+        $param[":telefono"]=$fila->__get("telefono");
+        $param[":dinero"]=$fila->__get("dinero");
             $this->usuarios[]=$usu;   //Añadimos ese usuario al array de objetos
             
         }
@@ -51,13 +51,13 @@ class DaoUsuarios extends DB
     {
         $param=array();
         
-        $param[":Nombre"]=$usuario->__get("nombre");
-        $param[":Apellidos"]=$usuario->__get("apellidos");
-        $param[":Contrasenia"]=$usuario->__get("contraseña");
-        $param[":Correo"]=$usuario->__get("correo");
-        $param[":Fecha"]=$usuario->__get("fechanac");
-        $param[":Telefono"]=$usuario->__get("telefono");
-        $param[":Dinero"]=$usuario->__get("dinero");
+        $param[":nombre"]=$usuario->__get("nombre");
+        $param[":apellidos"]=$usuario->__get("apellidos");
+        $param[":contraseña"]=$usuario->__get("contraseña");
+        $param[":correo"]=$usuario->__get("correo");
+        $param[":fecha"]=$usuario->__get("fechanac");
+        $param[":telefono"]=$usuario->__get("telefono");
+        $param[":dinero"]=$usuario->__get("dinero");;
         
         $consulta="insert into usuarios values (null,:Nombre,:Apellidos,:Contrasenia,:Correo,:Fecha,:Telefono,:Dinero) ";
         
@@ -83,14 +83,14 @@ class DaoUsuarios extends DB
     {
         
         $param=array();
-        $param[":Idusuario"]=$usuario->__get("idusuario");
-        $param[":Nombre"]=$usuario->__get("nombre");
-        $param[":Apellidos"]=$usuario->__get("apellidos");
-        $param[":Contraseña"]=$usuario->__get("contraseña");
-        $param[":Correo"]=$usuario->__get("correo");
-        $param[":Fecha"]=$usuario->__get("fechanac");
-        $param[":Telefono"]=$usuario->__get("telefono");
-        $param[":Dinero"]=$usuario->__get("dinero");
+        $param[":idusuario"]=$usuario->__get("idusuario");
+        $param[":nombre"]=$usuario->__get("nombre");
+        $param[":apellidos"]=$usuario->__get("apellidos");
+        $param[":contraseña"]=$usuario->__get("contraseña");
+        $param[":correo"]=$usuario->__get("correo");
+        $param[":fecha"]=$usuario->__get("fechanac");
+        $param[":telefono"]=$usuario->__get("telefono");
+        $param[":dinero"]=$usuario->__get("dinero");
         
         $consulta="update usuarios
                    set contraseña=:Contraseña,correo=:Correo,telefono=:Telefono,dinero=:Dinero
@@ -134,8 +134,3 @@ class DaoUsuarios extends DB
     
        
 }
-
-
-
-
-?>

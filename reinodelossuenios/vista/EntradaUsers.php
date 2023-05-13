@@ -21,7 +21,7 @@ session_start();
 
    require_once 'DaoUsuarios.php';
 
-   $dao = new DaoUsuarios("concesionario");
+   $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
 
    if (isset($_POST['Enviar'])) {
       $usuario = $_POST['Usuario'];
