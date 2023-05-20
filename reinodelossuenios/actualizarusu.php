@@ -122,8 +122,8 @@ e.preventDefault();
                             echo "paso por correo";
 
                             $usu = $dao->Obtener($correo);
-                            if ($usu != null) {
-                                echo "El correo $correo ya esta en uso";
+                            if ($usu == null) {
+                                echo "El correo $correo no existe";
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
@@ -139,8 +139,8 @@ e.preventDefault();
                                 $usu->__set("dinero", 0);
                                 echo "<br>";
                                 echo "paso por aqui";
-                                $dao->Insertar($usu);
-                                echo "<b> Usuario creado correctamente</b>";
+                                $dao->Actualizar($usu);
+                                echo "<b> Usuario actualizado correctamente</b>";
                                // echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.000webhostapp.com/index.html'> ";
                             }
                         }

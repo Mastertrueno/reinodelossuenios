@@ -75,9 +75,9 @@
 
                 </form>
                 <?php
-                require_once "controlador/Daousuarios.php";
+                require_once "controlador/DaoProductos.php";
 
-                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
+                $dao = new DaoUsuarios("reinodelossuenios");
                 if (isset($_POST["Guardar"])) {
                     $nombre = $_POST["nombre"];
                     $apellidos = $_POST["apellidos"];

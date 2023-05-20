@@ -22,6 +22,7 @@ session_start();
 
         <div class="container-sm">
 
+            <h1 class="lang" key="registrar">Registrese para continuar</h1>
             <h1 class="lang" key="registrar">Inicie sesión para continuar</h1>
             <div class="container">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
@@ -46,14 +47,11 @@ session_start();
                         </div>
                         <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                         <button type="submit" class="lang" name="Entrar" value="Entrar">Entrar</button>
-                        <button onclick="location.href='http://reinodelossuenios.42web.io/'">Volver</button>
                     </div>
-
                 </form>
                 <?php
-                require_once "controlador/DaoUsuarios.php";
-
-                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
+                require_once "controlador/Daousuarios.php";
+                $dao = new DaoUsuarios("reinodelossuenios");
                 if (isset($_POST["Entrar"])) {
                     $contraseña = $_POST["contraseña"];
                     $correo = $_POST["correo"];
@@ -78,15 +76,13 @@ session_start();
 
                             $_SESSION['Usuario'] = $usu;
 
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.000webhostapp.com/index.html'> ";
+                            //echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://localhost/reinodelossuenios/inicio.html'> ";
                         }
                     }
                 }
                 ?>
             </div>
         </div>
-
-
 </body>
 
 </html>
