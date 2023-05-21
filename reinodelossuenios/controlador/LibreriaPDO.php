@@ -1,15 +1,12 @@
 <?php
 
 //Clase que mediante PDO y orientacion a objectos accederemos a las BBDD
-require_once "display.php";
+require_once "../display.php";
 class DB
 {
 
     private $con; //Propiedad que retorna el objeto PDO resultante de la conexión
 
-    // private $host = 'sql202.epizy.com';
-    // private $user = 'epiz_34180798';
-    // private $pass = 'mgvDfwkMNt';
     private $host = 'sql202.epizy.com';
     private $user = 'epiz_34180798';
     private $pass = 'mgvDfwkMNt';
@@ -29,7 +26,6 @@ class DB
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
             $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-            echo "<script>console.log('Despues de declarar pdo')</script>";
         } catch (PDOException $e) {
             echo "Error al conectar con la BBDD";
             echo $e->getMessage();
@@ -48,30 +44,20 @@ class DB
         try {
             $this->Conectar();
             $sta = $this->con->prepare($consulta);
-            echo "<br>";
-            echo $consulta;
-            echo " sigue ";
 
-            echo "<br>";
-            foreach ($param as $key => $value) {
-                echo $key ;
-                echo $value;
-                echo "<br>";
-            }
-            echo $param;
-            echo "<br>";
+            // foreach ($param as $key => $value) {
+            //     echo $key ;
+            //     echo $value;
+            //     echo "<br>";
+            // }
+
             if (!($sta->execute($param))) {
                 echo "Error en la consulta";
             }
-            echo "paso?";
         } catch (Exception $err) {
-            echo "salto excepcion";
             echo $err->getMessage();
-            echo "<br>";
             echo $err->getCode();
         }
-
-        echo "Paso";
         $this->Cerrar();
     }
 
@@ -79,8 +65,7 @@ class DB
     {
 
         $this->Conectar();
-        echo "<br>";
-        echo "despues de conectar";
+
         $sta = $this->con->prepare($consulta);
         $this->filas = array(); //Vaciamos el array de filas(para no acumular las de consultas anteriores)
 
@@ -96,3 +81,4 @@ class DB
         $this->Cerrar();
     }
 }
+?>

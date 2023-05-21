@@ -8,8 +8,8 @@
     <title>Formulario Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
-    <link href="estilos/normalize.css" rel="stylesheet">
-    <link href="estilos/registro.css" rel="stylesheet">
+    <link href="../estilos/normalize.css" rel="stylesheet">
+    <link href="../estilos/registro.css" rel="stylesheet">
 </head>
 
 <body>
@@ -89,7 +89,7 @@
                     </div>
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
-                    <button onclick="location.href='http://reinodelossuenios.42web.io/'">Volver</button>
+                    <button onclick="location.href='../index.html'">Volver</button>
                 </form>
                 <!-- <script>
                 let form=document.forms[0];
@@ -99,11 +99,10 @@ e.preventDefault();
                 </script> -->
 
                 <?php
-                require_once "controlador/DaoUsuarios.php";
+                require_once "../controlador/DaoUsuarios.php";
 // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {
-                    echo "<script>console.log('Rellena los campos')</script>";
                     $nombre = $_POST["nombre"];
                     $apellidos = $_POST["apellidos"];
                     $contraseña = $_POST["contraseña"];
@@ -119,11 +118,9 @@ e.preventDefault();
                             echo "Error las claves son distintas";
                         } else {
                             //comprobamos que el usuario no exista
-                            echo "paso por correo";
-
                             $usu = $dao->Obtener($correo);
-                            if ($usu != null) {
-                                echo "El correo $correo ya esta en uso";
+                            if ($usu == null) {
+                                echo "El correo $correo no existe";
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
@@ -137,11 +134,9 @@ e.preventDefault();
                                 $usu->__set("fechanac", $fechanac);
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
-                                echo "<br>";
-                                echo "paso por aqui";
-                                $dao->Insertar($usu);
-                                echo "<b> Usuario creado correctamente</b>";
-                               // echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.000webhostapp.com/index.html'> ";
+                                $dao->Actualizar($usu);
+                                echo "<b> Usuario actualizado correctamente</b>";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/index.html'> ";
                             }
                         }
                     }else{

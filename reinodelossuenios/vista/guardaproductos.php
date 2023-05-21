@@ -8,8 +8,8 @@
     <title>Formulario Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
-    <link href="estilos/normalize.css" rel="stylesheet">
-    <link href="estilos/registro.css" rel="stylesheet">
+    <link href="../estilos/normalize.css" rel="stylesheet">
+    <link href="../estilos/registro.css" rel="stylesheet">
 </head>
 
 <body>
@@ -64,55 +64,51 @@
                             <label for="foto">
                                 <h2 class="lang" key="fecha">Foto</h2>
                             </label>
-                            <input id="foto" name="foto" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('foto')">
-                            <div class="invalid-feedback lang" key="pfecha">
-                                Seleccione su fecha de nacimiento
+                            <input id="foto" name="foto" type="file" class="form-control " required onchange="fieldsCompleted('foto')">
+                            <div class="invalid-feedback lang" key="pfoto">
+                                Seleccione la imagen del producto
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="lang" name="Guardar" value="Guardar">Guardar</button>
-
-
+                    <button onclick="location.href='../index.html'">Volver</button>
                 </form>
                 <?php
-                require_once "controlador/Daousuarios.php";
-
-                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
+                require_once "../controlador/DaoProductos.php";
+                $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Guardar"])) {
                     $nombre = $_POST["nombre"];
-                    $apellidos = $_POST["apellidos"];
-                    $contraseña = $_POST["contraseña"];
-                    $contraseña2 = $_POST["contraseña2"];
-                    $correo = $_POST["correo"];
-                    $telefono = $_POST["telefono"];
-                    $fechanac = $_POST["fechanac"];
+                    $descripcion = $_POST["descripcion"];
+                    $precio = $_POST["precio"];
+                    $cantidad = $_POST["cantidad"];
+                    //$foto = $_POST["foto"];
+                    
+                    $imagen = $_FILES['foto']['tmp_name'];
                     if (
-                        $nombre != "" && $apellidos != "" && $contraseña != "" && $correo != "" && $telefono != ""
-                        && $fechanac != ""
+                        $nombre != "" && $descripcion != "" && $precio != "" && $cantidad != "" && $imagen != null
                     ) {
                         if ($contraseña != $contraseña2) {
                             echo "Error las claves son distintas";
                         } else {
                             //comprobamos que el usuario no exista
-                            $usu = $dao->Obtener($correo);
+                            $prod = $dao->Obtener($nombre);
                             if ($usu != null) {
-                                echo "El correo $correo ya esta en uso";
+                                echo "El producto $nombre ya existe";
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
                                 $fin = "?/&%)(";
                                 $usu = new Usuario();
                                 $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
-                                $usu->__set("nombre", $nombre);
-                                $usu->__set("contraseña", $contraseña);
-                                $usu->__set("apellidos", $apellidos);
-                                $usu->__set("correo", $correo);
-                                $usu->__set("fechanac", $fechanac);
-                                $usu->__set("telefono", $telefono);
-                                $usu->__set("dinero", 0);
+                                $prod->__set("nombre", $nombre);
+                                $prod->__set("descripcion", $descripcion);
+                                $prod->__set("precio", $precio);
+                                $prod->__set("cantidad", $cantidad);
+                                $prod->__set("imagen", $imagen);
+                          
                                 $dao->Insertar($usu);
                                 echo "<b> Usuario creado correctamente</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/inicio.html'> ";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/inicio.html'> ";
                             }
                         }
                     }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+session_abort();
 session_start();
 
 ?>
@@ -12,8 +13,8 @@ session_start();
     <title>Formulario Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
-    <link href="estilos/normalize.css" rel="stylesheet">
-    <link href="estilos/registro.css" rel="stylesheet">
+    <link href="../estilos/normalize.css" rel="stylesheet">
+    <link href="../estilos/registro.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,8 +31,8 @@ session_start();
                             <label for="correo">
                                 <h2 class="lang" key="correo">Correo </h2>
                             </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
-                            <div class="invalid-feedback lang" key="pemail">
+                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('correo')">
+                            <div class="invalid-feedback lang" key="pcorreo">
                                 Ponga su correo electronico
                             </div>
                         </div>
@@ -46,12 +47,12 @@ session_start();
                         </div>
                         <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                         <button type="submit" class="lang" name="Entrar" value="Entrar">Entrar</button>
-                        <button onclick="location.href='http://reinodelossuenios.42web.io/'">Volver</button>
+                        <button onclick="location.href='../index.html'">Volver</button>
                     </div>
 
                 </form>
                 <?php
-                require_once "controlador/DaoUsuarios.php";
+                require_once "../controlador/DaoUsuarios.php";
 
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Entrar"])) {
@@ -78,15 +79,13 @@ session_start();
 
                             $_SESSION['Usuario'] = $usu;
 
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.000webhostapp.com/index.html'> ";
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='4;URL=http://reinodelossuenios.42web.io/index.html'> ";
                         }
                     }
                 }
                 ?>
             </div>
         </div>
-
-
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'LibreriaPDO.php';
-require_once './modelo/Usuario.php';
+require_once '../modelo/Usuario.php';
 
 class DaoUsuarios extends DB
 {
@@ -53,14 +53,9 @@ class DaoUsuarios extends DB
         $param[":Fecha"] = $usuario->__get("fechanac");
         $param[":Telefono"] = $usuario->__get("telefono");
         $param[":Dinero"] = $usuario->__get("dinero");
-        echo "<br>";
-        echo "antes del consulta";
-        //(`idusuario`, `nombre`, `apellidos`, `contraseña`, `correo`, `fechanac`, `telefono`, `dinero`)
         $consulta = "INSERT INTO usuarios VALUES(:Idusuario,:Nombre,:Apellidos,:Contrasenia,:Correo,:Fecha,:Telefono,:Dinero)";
 
         $this->ConsultaSimple($consulta, $param);
-        echo "<br>";
-        echo "despues del insert";
     }
 
     public function Eliminar($usu)    //Recibe como parámetro el nombre del usuario a eliminar
@@ -100,17 +95,13 @@ class DaoUsuarios extends DB
     {
         $param = array();
         $param[":Correo"] = $usu;
-        echo "en obtener";
         $consulta = "SELECT * FROM usuarios where correo=:Correo";
-        echo "antes de consulta";
         $this->ConsultaDatos($consulta, $param);
-        echo "despues de consulta";
 
         if (count($this->filas) == 1)     //Si devuelve una fila
         {
             $fila = $this->filas[0];
-            echo $this->filas[0]["contraseña"];
-            echo "<br>";
+
             $usuario = new Usuario();
 
             $usuario->__set("idusuario", $fila["idusuario"]);
@@ -125,6 +116,6 @@ class DaoUsuarios extends DB
             $usuario = NULL;
         }
         return $usuario;  //Retorna un objeto tipo usuario
-
     }
 }
+?>

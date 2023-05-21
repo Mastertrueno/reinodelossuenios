@@ -8,8 +8,8 @@
     <title>Formulario Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
-    <link href="estilos/normalize.css" rel="stylesheet">
-    <link href="estilos/registro.css" rel="stylesheet">
+    <link href="../estilos/normalize.css" rel="stylesheet">
+    <link href="../estilos/registro.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 
             <h1 class="lang" key="registrar">Registrese para continuar</h1>
             <div class="container">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
@@ -35,7 +35,7 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
                             <div class="invalid-feedback lang" key="papellidos">
                                 Ponga sus apellidos
                             </div>
@@ -46,12 +46,12 @@
                             </label>
                             <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
                             <div class="invalid-feedback lang" key="pcontraseña">
-                                Ponga una contraseña
+                                Ponga una contraseña (8 minimo, sin caracteres especiales)
                             </div>
                         </div>
                         <div class="mb-3 contraseña camp">
                             <label for="contraseña">
-                                <h2 class="lang" key="contraseña">Confirmación Contraseña </h2>
+                                <h2 class="lang" >Confirmación Contraseña </h2>
                             </label>
                             <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
                             <div class="invalid-feedback lang" key="pcontraseña">
@@ -89,13 +89,19 @@
                     </div>
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
-
-
+                    <button onclick="location.href='../index.html'">Volver</button>
                 </form>
-                <?php
-                require_once "controlador/Daousuarios.php";
+                <!-- <script>
+                let form=document.forms[0];
+                form.addEventListener("submit",function(e){
+e.preventDefault();
+                });
+                </script> -->
 
-                $dao = new DaoUsuarios("reinodelossuenios");
+                <?php
+                require_once "../controlador/DaoUsuarios.php";
+// require_once "display.php";
+                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {
                     $nombre = $_POST["nombre"];
                     $apellidos = $_POST["apellidos"];
@@ -118,7 +124,7 @@
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
-                                $fin = "?/&%)(";
+                                $fin = "?/&%)";
                                 $usu = new Usuario();
                                 $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
                                 $usu->__set("nombre", $nombre);
@@ -129,8 +135,12 @@
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
                                 $dao->Insertar($usu);
+                                echo "<b> Usuario creado correctamente</b>";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/index.html'> ";
                             }
                         }
+                    }else{
+                        echo "RELLENE LOS CAMPOS";
                     }
                 }
                 ?>
