@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<?php
+session_abort();
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +22,7 @@
 
             <h1 class="lang" key="registrar">Registrese para continuar</h1>
             <div class="container">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
@@ -35,11 +37,11 @@
                             <label for="descripcion">
                                 <h2 class="lang" key="descripcion">Descripcion </h2>
                             </label>
-                            <textarea  id="descripcion" name="descripcion" type="tex" class="form-control campo">
+                            <textarea  id="descripcion" name="descripcion" type="text" class="form-control campo">
                             </textarea>
-                            <div class="invalid-feedback lang" key="pdescripcion">
+                            <!-- <div class="invalid-feedback lang" key="pdescripcion">
                                 Ponga sus descripcion
-                            </div>
+                            </div> -->
                         </div>
                         <div class="mb-3 precio camp">
                             <label for="precio">
@@ -81,36 +83,35 @@
                     $descripcion = $_POST["descripcion"];
                     $precio = $_POST["precio"];
                     $cantidad = $_POST["cantidad"];
-                    //$foto = $_POST["foto"];
-                    
                     $imagen = $_FILES['foto']['tmp_name'];
                     if (
-                        $nombre != "" && $descripcion != "" && $precio != "" && $cantidad != "" && $imagen != null
+                        $nombre != "" && $descripcion != "" && $precio != "" && $cantidad != "" && $imagen != ""
                     ) {
-                        if ($contraseña != $contraseña2) {
-                            echo "Error las claves son distintas";
+                        if ($precio <= 0 || $cantidad <= 0) {
+                            echo "<b>Error: precio o cantidad no valida</b>";
                         } else {
                             //comprobamos que el usuario no exista
                             $prod = $dao->Obtener($nombre);
-                            if ($usu != null) {
-                                echo "El producto $nombre ya existe";
+                            if ($prod != null) {
+                                echo "<b>El producto $nombre ya existe</b>";
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
                                 $fin = "?/&%)(";
-                                $usu = new Usuario();
-                                $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
+                                $prod = new Producto();
                                 $prod->__set("nombre", $nombre);
                                 $prod->__set("descripcion", $descripcion);
                                 $prod->__set("precio", $precio);
                                 $prod->__set("cantidad", $cantidad);
                                 $prod->__set("imagen", $imagen);
                           
-                                $dao->Insertar($usu);
-                                echo "<b> Usuario creado correctamente</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/inicio.html'> ";
+                                $dao->Insertar($prod);
+                                echo "<b>Producto creado correctamente</b>";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
+                    }else{
+                        echo "RELLENE LOS CAMPOS";
                     }
                 }
                 ?>

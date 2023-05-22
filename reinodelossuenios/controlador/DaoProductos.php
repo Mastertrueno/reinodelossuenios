@@ -92,9 +92,9 @@ class DaoProductos extends DB
     {
         $param = array();
 
-        $param[":Idproducto"] = $prod;
+        $param[":Nombre"] = $prod;
 
-        $consulta = "SELECT * FROM productos where id=:Idproducto";
+        $consulta = "SELECT * FROM productos where nombre=:Nombre";
 
         $this->ConsultaDatos($consulta, $param);
 

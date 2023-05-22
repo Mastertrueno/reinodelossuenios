@@ -75,16 +75,21 @@ class DaoUsuarios extends DB
 
         $param = array();
         $param[":Idusuario"] = $usuario->__get("idusuario");
-        $param[":Nombre"] = $usuario->__get("nombre");
-        $param[":Apellidos"] = $usuario->__get("apellidos");
+        // $param[":Nombre"] = $usuario->__get("nombre");
+        // $param[":Apellidos"] = $usuario->__get("apellidos");
         $param[":Contraseña"] = $usuario->__get("contraseña");
         $param[":Correo"] = $usuario->__get("correo");
-        $param[":Fecha"] = $usuario->__get("fechanac");
+        //$param[":Fecha"] = $usuario->__get("fechanac");
         $param[":Telefono"] = $usuario->__get("telefono");
-        $param[":Dinero"] = $usuario->__get("dinero");
-
-        $consulta = "UPDATE 'usuarios'
-                   SET 'contraseña'=:Contraseña,'correo'=:Correo,'telefono'=:Telefono,'dinero'=:Dinero
+        //$param[":Dinero"] = $usuario->__get("dinero");
+        foreach ($param as $key => $value) {
+              echo $key ;
+              echo " ";
+                echo $value;
+                echo "<br>";
+             }
+        $consulta = "UPDATE usuarios
+                   SET contraseña=:Contraseña,correo=:Correo,telefono=:Telefono
                    WHERE idusuario=:Idusuario ";
 
         $this->ConsultaSimple($consulta, $param);

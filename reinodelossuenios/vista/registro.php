@@ -115,12 +115,12 @@ e.preventDefault();
                         && $fechanac != ""
                     ) {
                         if ($contraseña != $contraseña2) {
-                            echo "Error las claves son distintas";
+                            echo "<b>Error las claves son distintas</b>";
                         } else {
                             //comprobamos que el usuario no exista
                             $usu = $dao->Obtener($correo);
                             if ($usu != null) {
-                                echo "El correo $correo ya esta en uso";
+                                echo "<b>El correo $correo ya esta en uso</b>";
                             } else {
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
@@ -136,7 +136,7 @@ e.preventDefault();
                                 $usu->__set("dinero", 0);
                                 $dao->Insertar($usu);
                                 echo "<b> Usuario creado correctamente</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/index.html'> ";
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
                     }else{

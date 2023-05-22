@@ -115,18 +115,22 @@ e.preventDefault();
                         && $fechanac != ""
                     ) {
                         if ($contraseña != $contraseña2) {
-                            echo "Error las claves son distintas";
+                            echo "<b>Error las contraseñas son distintas</b>";
                         } else {
                             //comprobamos que el usuario no exista
                             $usu = $dao->Obtener($correo);
                             if ($usu == null) {
-                                echo "El correo $correo no existe";
+                                echo "<b>El correo $correo no existe</b>";
                             } else {
+                                $id=$usu->__get("idusuario");
+                                
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
                                 $fin = "?/&%)";
                                 $usu = new Usuario();
                                 $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
+                                $usu->__set("idusuario", $id);
+                                echo "el id ".$id;
                                 $usu->__set("nombre", $nombre);
                                 $usu->__set("contraseña", $contraseña);
                                 $usu->__set("apellidos", $apellidos);
@@ -135,8 +139,8 @@ e.preventDefault();
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
                                 $dao->Actualizar($usu);
-                                echo "<b> Usuario actualizado correctamente</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/index.html'> ";
+                                echo "<b>Usuario actualizado correctamente</b>";
+                                //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
                     }else{

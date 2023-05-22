@@ -44,12 +44,12 @@ class DB
         try {
             $this->Conectar();
             $sta = $this->con->prepare($consulta);
-
-            // foreach ($param as $key => $value) {
-            //     echo $key ;
-            //     echo $value;
-            //     echo "<br>";
-            // }
+echo $consulta;
+             foreach ($param as $key => $value) {
+                 echo $key ;
+             echo $value;
+                echo "<br>";
+             }
 
             if (!($sta->execute($param))) {
                 echo "Error en la consulta";

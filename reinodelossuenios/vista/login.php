@@ -79,7 +79,7 @@ session_start();
 
                             $_SESSION['Usuario'] = $usu;
 
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='4;URL=http://reinodelossuenios.42web.io/index.html'> ";
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='4;URL=http://reinodelossuenios.42web.io/'> ";
                         }
                     }
                 }
