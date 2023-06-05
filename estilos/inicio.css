@@ -1,0 +1,50 @@
+.nav_img {
+    width: 45px;
+    height: 45px;
+}
+header{
+    height: 150px;
+    background-color: aqua;
+
+}
+main{
+    height: fit-content;
+    width: 100%;
+    background-color: bisque;
+
+}
+footer{
+    position: absolute;
+    background-color: blueviolet;
+    width: 100%;
+    bottom: 0%;
+}
+.header_image{
+    position: relative;
+height: 96px;
+width: 162.5px;
+text-align: center;
+}
+.btn{
+    width:fit-content ;
+    height:fit-content ;
+
+}
+.sesion{
+    background-color: brown;
+    width: 10%;
+    position: absolute;
+    right: 05%;
+}
+.usu{
+    height: 75px;
+    width: 75px;
+}
+.adminmod{
+    background-color: chocolate;
+    position: absolute;
+    left: 30%;
+}
+nav{
+    background-color: chartreuse;
+}
