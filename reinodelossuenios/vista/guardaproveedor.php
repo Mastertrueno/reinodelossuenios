@@ -4,7 +4,7 @@
 session_start();
 session_abort();
 
-require_once "../controlador/DaoProveedor.php";
+require_once "../modelo/DaoProveedor.php";
 $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
 ?>
 

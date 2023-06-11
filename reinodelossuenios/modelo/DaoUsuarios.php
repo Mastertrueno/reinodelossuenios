@@ -1,7 +1,7 @@
 <?php
 
 require_once 'LibreriaPDO.php';
-require_once '../modelo/Usuario.php';
+require_once 'Usuario.php';
 
 class DaoUsuarios extends DB
 {

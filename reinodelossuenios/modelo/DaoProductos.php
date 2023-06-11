@@ -1,12 +1,12 @@
 <?php
 
 require_once 'LibreriaPDO.php';
-require_once '../modelo/Producto.php';
+require_once 'Producto.php';
 
 class DaoProductos extends DB
 {
 
-    public $productos = array();   //Array de objetos tipo Productos
+    private $productos=[] ;   //Array de objetos tipo Productos
 
 
     public function __construct($base)   //Tenermos que pasarle la BBDD al crear el Dao
@@ -20,7 +20,7 @@ class DaoProductos extends DB
     {
         $param = array();
 
-        $this->productos = array();   //Vaciamos el array de objetos de contenido anterior
+        //$this->productos = array();   //Vaciamos el array de objetos de contenido anterior
 
         $consulta = "SELECT * FROM productos";
 
@@ -37,9 +37,10 @@ class DaoProductos extends DB
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
 
-            $this->productos[] = $producto;   //Añadimos ese usuario al array de objetos
+            array_push($this->productos,$producto);   //Añadimos ese usuario al array de objetos
 
         }
+        return $this->productos;
     }
 
 

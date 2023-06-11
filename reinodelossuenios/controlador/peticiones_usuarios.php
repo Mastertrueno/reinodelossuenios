@@ -1,5 +1,5 @@
 <?php
-    require ("./DaoUsuarios.php.php");
+    require ("../modelo/DaoUsuarios.php");
 
     $productos=new DaoUsuarios("epiz_34180798_reinodelossuenios");
     $productos->Listar();

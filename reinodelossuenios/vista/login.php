@@ -47,12 +47,13 @@ session_start();
                         </div>
                         <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                         <button type="submit" class="lang" name="Entrar" value="Entrar">Entrar</button>
-                        <button onclick="location.href='../index.html'">Volver</button>
+                        
                     </div>
 
                 </form>
+                <button onclick="location.href='../index.html'">Volver</button>
                 <?php
-                require_once "../controlador/DaoUsuarios.php";
+                require_once "../modelo/DaoUsuarios.php";
 
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Entrar"])) {
@@ -76,7 +77,8 @@ session_start();
                         } else {
 
                             echo "<b> Login correcto</b>";
-
+                            echo "<br>";
+                            echo "<b>Redirigiendo a la pagina principal</b>";
                             $_SESSION['Usuario'] = $usu;
 
                             echo "<META HTTP-EQUIV='REFRESH' CONTENT='4;URL=http://reinodelossuenios.42web.io/'> ";

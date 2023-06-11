@@ -51,7 +51,7 @@
                         </div>
                         <div class="mb-3 contraseña camp">
                             <label for="contraseña">
-                                <h2 class="lang" >Confirmación Contraseña </h2>
+                                <h2 class="lang">Confirmación Contraseña </h2>
                             </label>
                             <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
                             <div class="invalid-feedback lang" key="pcontraseña">
@@ -89,18 +89,25 @@
                     </div>
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
-                    <button onclick="location.href='../index.html'">Volver</button>
+
                 </form>
+                <button onclick="location.href='../index.html'">Volver</button>
                 <!-- <script>
                 let form=document.forms[0];
                 form.addEventListener("submit",function(e){
 e.preventDefault();
                 });
                 </script> -->
-
+                <!-- <script type="text/javascript">
+    function redirect()
+    {
+   
+    window.location.href="http://reinodelossuenios.42web.io/index.html";
+    }
+    </script> -->
                 <?php
-                require_once "../controlador/DaoUsuarios.php";
-// require_once "display.php";
+                require_once "../modelo/DaoUsuarios.php";
+                // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {
                     $nombre = $_POST["nombre"];
@@ -132,15 +139,18 @@ e.preventDefault();
                                 $usu->__set("apellidos", $apellidos);
                                 $usu->__set("correo", $correo);
                                 $usu->__set("fechanac", $fechanac);
+                                $usu->__set("rol", "user");
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
                                 $dao->Insertar($usu);
                                 echo "<b> Usuario creado correctamente</b>";
+                                echo "<br>";
+                                echo "<b>Redirigiendo a la pagina principal</b>";
                                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
-                    }else{
-                        echo "RELLENE LOS CAMPOS";
+                    } else {
+                        echo "<b>RELLENE LOS CAMPOS<b>";
                     }
                 }
                 ?>

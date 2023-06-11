@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <?php
+session_start();
 session_abort();
+
+require_once "../modelo/DaoProveedor.php";
+$daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +25,7 @@ session_abort();
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Registrese para continuar</h1>
+            <h1 class="lang" key="registrar">Añada un producto</h1>
             <div class="container">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
@@ -28,7 +33,7 @@ session_abort();
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,12}" required onchange="fieldsCompleted('nombre')">
+                            <input id="nombre" name="nombre" type="text" class="form-control campo" required onchange="fieldsCompleted('nombre')">
                             <div class="invalid-feedback lang" key="pnombre">
                                 Ponga el nombre del producto
                             </div>
@@ -37,7 +42,7 @@ session_abort();
                             <label for="descripcion">
                                 <h2 class="lang" key="descripcion">Descripcion </h2>
                             </label>
-                            <textarea  id="descripcion" name="descripcion" type="text" class="form-control campo">
+                            <textarea id="descripcion" name="descripcion" type="text" class="form-control campo">
                             </textarea>
                             <!-- <div class="invalid-feedback lang" key="pdescripcion">
                                 Ponga sus descripcion
@@ -49,7 +54,7 @@ session_abort();
                             </label>
                             <input id="precio" name="precio" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
                             <div class="invalid-feedback lang" key="pprecio">
-                                Ponga un precio 
+                                Ponga un precio
                             </div>
                         </div>
 
@@ -59,7 +64,7 @@ session_abort();
                             </label>
                             <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
                             <div class="invalid-feedback lang" key="pcantidad">
-                                Ponga una cantidad 
+                                Ponga una cantidad
                             </div>
                         </div>
                         <div class="mb-3 foto camp">
@@ -71,19 +76,48 @@ session_abort();
                                 Seleccione la imagen del producto
                             </div>
                         </div>
+                        <div class="mb-3 camp">
+                            <h2 class="lang" key="cantidad">Proveedor</h2>
+                            <select name="proveedor">
+                                <?php
+                                echo "<script>console.log('antes de require')</script>";
+
+
+                                echo "<script>console.log('antes de listar')</script>";
+                                $daoprov->Listar();
+                                echo "<script>console.log('despues de listar')</script>";
+                                foreach ($daoprov->proveedor as $prov) {
+                                    echo "<script>console.log('entro')</script>";
+                                    echo "<script>console.log(" . $prov->__get('Id_proveedor') . ")</script>";
+                                    echo "<option value=" . $prov->__get('Id_proveedor');
+
+                                    // if ($pais == $fila['id_proveedor']) {
+                                    //   echo " selected ";
+                                    // }
+
+                                    echo "> " . $prov->__get('Id_proveedor') . "</option>";
+                                }
+
+                                ?>
+                            </select>
+                        </div>
+
                     </div>
                     <button type="submit" class="lang" name="Guardar" value="Guardar">Guardar</button>
-                    <button onclick="location.href='../index.html'">Volver</button>
+
                 </form>
+                <button onclick="location.href='../index.html'">Volver</button>
                 <?php
-                require_once "../controlador/DaoProductos.php";
+                require_once "../modelo/DaoProductos.php";
                 $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
+
                 if (isset($_POST["Guardar"])) {
                     $nombre = $_POST["nombre"];
                     $descripcion = $_POST["descripcion"];
                     $precio = $_POST["precio"];
                     $cantidad = $_POST["cantidad"];
                     $imagen = $_FILES['foto']['tmp_name'];
+                    $proveedor = $_POST["proveedor"];
                     if (
                         $nombre != "" && $descripcion != "" && $precio != "" && $cantidad != "" && $imagen != ""
                     ) {
@@ -103,15 +137,17 @@ session_abort();
                                 $prod->__set("descripcion", $descripcion);
                                 $prod->__set("precio", $precio);
                                 $prod->__set("cantidad", $cantidad);
-                                $prod->__set("imagen", $imagen);
-                          
+                                $imgcod = base64_encode(file_get_contents($imagen));
+                                // $imgcod = base64_encode($imagen);
+                                $prod->__set("imagen", $imgcod);
+                                $prod->__set("proveedor", $proveedor);
                                 $dao->Insertar($prod);
                                 echo "<b>Producto creado correctamente</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
+                                //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
-                    }else{
-                        echo "RELLENE LOS CAMPOS";
+                    } else {
+                        echo "<b>RELLENE LOS CAMPOS<b>";
                     }
                 }
                 ?>

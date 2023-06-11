@@ -35,10 +35,8 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
-                            <div class="invalid-feedback lang" key="papellidos">
-                                Ponga sus apellidos
-                            </div>
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required >
+                            
                         </div>
                         <div class="mb-3 contraseña camp">
                             <label for="contraseña">
@@ -51,12 +49,10 @@
                         </div>
                         <div class="mb-3 contraseña camp">
                             <label for="contraseña">
-                                <h2 class="lang" >Confirmación Contraseña </h2>
+                                <h2 class="lang">Confirmación Contraseña </h2>
                             </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
-                            <div class="invalid-feedback lang" key="pcontraseña">
-                                Confirma la contraseña
-                            </div>
+                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
+                            
                         </div>
                         <div class="mb-3 email camp">
                             <label for="correo">
@@ -67,7 +63,12 @@
                                 Ponga su correo electronico
                             </div>
                         </div>
-
+                        <div class="mb-3 email camp">
+                            <label for="correo">
+                                <h2 class="lang" key="correo2">Correo Nuevo</h2>
+                            </label>
+                            <input id="correonew" name="correo2" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
+                        </div>
                         <div class="mb-3 telefono camp">
                             <label for="telefono">
                                 <h2 class="lang" key="Telefono">Telefono</h2>
@@ -77,20 +78,10 @@
                                 Ponga su telefono
                             </div>
                         </div>
-                        <div class="mb-3 fechanac camp">
-                            <label for="fechanac">
-                                <h2 class="lang" key="fecha">Fecha nacimiento </h2>
-                            </label>
-                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('fechanac')">
-                            <div class="invalid-feedback lang" key="pfecha">
-                                Seleccione su fecha de nacimiento
-                            </div>
-                        </div>
                     </div>
-                    <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
-                    <button onclick="location.href='../index.html'">Volver</button>
                 </form>
+                <button onclick="location.href='../index.html'">Volver</button>
                 <!-- <script>
                 let form=document.forms[0];
                 form.addEventListener("submit",function(e){
@@ -99,8 +90,8 @@ e.preventDefault();
                 </script> -->
 
                 <?php
-                require_once "../controlador/DaoUsuarios.php";
-// require_once "display.php";
+                require_once "../modelo/DaoProductos.php";
+                // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {
                     $nombre = $_POST["nombre"];
@@ -122,15 +113,15 @@ e.preventDefault();
                             if ($usu == null) {
                                 echo "<b>El correo $correo no existe</b>";
                             } else {
-                                $id=$usu->__get("idusuario");
-                                
+                                $id = $usu->__get("idusuario");
+
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
                                 $fin = "?/&%)";
                                 $usu = new Usuario();
                                 $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
                                 $usu->__set("idusuario", $id);
-                                echo "el id ".$id;
+                                echo "el id " . $id;
                                 $usu->__set("nombre", $nombre);
                                 $usu->__set("contraseña", $contraseña);
                                 $usu->__set("apellidos", $apellidos);
@@ -143,8 +134,8 @@ e.preventDefault();
                                 //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
-                    }else{
-                        
+                    } else {
+
                         echo "RELLENE LOS CAMPOS";
                     }
                 }

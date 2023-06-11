@@ -18,7 +18,7 @@ class BaseController
      */
     protected function render(string $view, $data = [])
     {
-        $route = "views/" . $view . ".php";
+        $route = "vista/" . $view . ".php";
 
         if(file_exists($route))
         {

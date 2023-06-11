@@ -1,8 +1,6 @@
 .nav_img {
-    margin: 30px;
-    width: 60px;
-    height: 60px;
-    display: block;
+    width: 45px;
+    height: 45px;
 }
 header{
     height: 150px;
@@ -23,6 +21,31 @@ footer{
 }
 .header_image{
     position: relative;
-height: 50%;
-width: 200px;
+height: 96px;
+width: 162.5px;
+text-align: center;
+}
+.btn{
+    width:fit-content ;
+    height:fit-content ;
+
+}
+.sesion{
+    background-color: brown;
+    width: 10%;
+    position: absolute;
+    right: 05%;
+}
+.usu{
+    height: 75px;
+    width: 75px;
+}
+.adminmod{
+    background-color: chocolate;
+    position: absolute;
+    left: 30%;
+}
+nav{
+    background-color: chartreuse;
+    width: 30%;
 }

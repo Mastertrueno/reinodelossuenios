@@ -1,7 +1,7 @@
 <?php
 
 require_once 'LibreriaPDO.php';
-require_once '../modelo/Proveedor.php';
+require_once 'Proveedor.php';
 
 class DaoProveedor extends DB
 {

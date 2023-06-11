@@ -89,7 +89,6 @@
                     </div>
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
-
                 </form>
                 <button onclick="location.href='../index.html'">Volver</button>
                 <!-- <script>
@@ -98,15 +97,9 @@
 e.preventDefault();
                 });
                 </script> -->
-                <!-- <script type="text/javascript">
-    function redirect()
-    {
-   
-    window.location.href="http://reinodelossuenios.42web.io/index.html";
-    }
-    </script> -->
+
                 <?php
-                require_once "../controlador/DaoUsuarios.php";
+                require_once "../modelo/DaoUsuarios.php";
                 // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {
@@ -122,35 +115,37 @@ e.preventDefault();
                         && $fechanac != ""
                     ) {
                         if ($contraseña != $contraseña2) {
-                            echo "<b>Error las claves son distintas</b>";
+                            echo "<b>Error las contraseñas son distintas</b>";
                         } else {
                             //comprobamos que el usuario no exista
                             $usu = $dao->Obtener($correo);
-                            if ($usu != null) {
-                                echo "<b>El correo $correo ya esta en uso</b>";
+                            if ($usu == null) {
+                                echo "<b>El correo $correo no existe</b>";
                             } else {
+                                $id = $usu->__get("idusuario");
+
                                 //creamos una cadena inicial y final para que complemente a la clave
                                 $ini = "#-¿¡!";
                                 $fin = "?/&%)";
                                 $usu = new Usuario();
                                 $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
+                                $usu->__set("idusuario", $id);
+                                echo "el id " . $id;
                                 $usu->__set("nombre", $nombre);
                                 $usu->__set("contraseña", $contraseña);
                                 $usu->__set("apellidos", $apellidos);
                                 $usu->__set("correo", $correo);
                                 $usu->__set("fechanac", $fechanac);
-                                $usu->__set("rol", "user");
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
-                                $dao->Insertar($usu);
-                                echo "<b> Usuario creado correctamente</b>";
-                                echo "<br>";
-                                echo "<b>Redirigiendo a la pagina principal</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
+                                $dao->Actualizar($usu);
+                                echo "<b>Usuario actualizado correctamente</b>";
+                                //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
                     } else {
-                        echo "<b>RELLENE LOS CAMPOS<b>";
+
+                        echo "RELLENE LOS CAMPOS";
                     }
                 }
                 ?>

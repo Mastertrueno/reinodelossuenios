@@ -1,7 +1,7 @@
 <?php
-    require ("DaoProductos.php");
+    require ("../modelo/DaoProveedor.php");
 
-    $productos=new DaoProductos("epiz_34180798_reinodelossuenios");
+    $productos=new DaoProveedor("epiz_34180798_reinodelossuenios");
     $productos->Listar();
     header('Content-Type: application/json');
     echo json_encode($productos);
