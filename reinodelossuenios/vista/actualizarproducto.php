@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -90,7 +94,7 @@
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
                 </form>
-                <button onclick="location.href='../index.html'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
                 <!-- <script>
                 let form=document.forms[0];
                 form.addEventListener("submit",function(e){

@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -26,7 +30,7 @@
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,12}" required onchange="fieldsCompleted('nombre')">
+                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,12}" required onchange="fieldsCompleted('nombre')">
                             <div class="invalid-feedback lang" key="pnombre">
                                 Ponga su nombre
                             </div>
@@ -35,14 +39,14 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required >
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}" required >
                             
                         </div>
                         <div class="mb-3 contraseña camp">
                             <label for="contraseña">
                                 <h2 class="lang" key="contraseña">Contraseña </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Ponga una contraseña (8 minimo, sin caracteres especiales)
                             </div>
@@ -51,7 +55,7 @@
                             <label for="contraseña">
                                 <h2 class="lang">Confirmación Contraseña </h2>
                             </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
+                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{8,24}" class="form-control campo" required>
                             
                         </div>
                         <div class="mb-3 email camp">
@@ -81,7 +85,7 @@
                     </div>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
                 </form>
-                <button onclick="location.href='../index.html'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
                 <!-- <script>
                 let form=document.forms[0];
                 form.addEventListener("submit",function(e){
@@ -90,7 +94,7 @@ e.preventDefault();
                 </script> -->
 
                 <?php
-                require_once "../modelo/DaoProductos.php";
+                require_once "../modelo/DaoUsuarios.php";
                 // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
                 if (isset($_POST["Enviar"])) {

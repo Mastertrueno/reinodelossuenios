@@ -5,19 +5,32 @@
 header{
     height: 150px;
     background-color: aqua;
-
+width: 100%;
 }
 main{
     height: fit-content;
-    width: 100%;
+    width: 80%;
     background-color: bisque;
+}
+aside{
+    height: auto;
+    width: 20%;
+    background-color: rgb(164, 238, 138);
 
 }
 footer{
-    position: absolute;
+    /* position: fixed;
+    display: block; */
     background-color: blueviolet;
     width: 100%;
     bottom: 0%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    margin-right: 20px;
+    color: white;
+    font-size: 18px;
 }
 .header_image{
     position: relative;
@@ -48,4 +61,11 @@ text-align: center;
 nav{
     background-color: chartreuse;
     width: 30%;
+}
+.producto{
+    position: absolute;
+    text-align: center;
+}
+h1{
+    text-align: center;
 }

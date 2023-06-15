@@ -22,25 +22,25 @@ final class Dispatcher
         
         if(isset($_GET["url"])) $url = $_GET["url"];
         if(isset($_GET["action"])) $action = $_GET["action"];
-        echo $url;
-        echo "<br>";
-        echo $action;
-        echo "<br>";
+        // echo $url;
+        // echo "<br>";
+        // echo $action;
+        // echo "<br>";
         $controller_name = ucfirst($url)."Controller" ;
-        echo $controller_name;
-        echo "<br>";
+        // echo $controller_name;
+        // echo "<br>";
         $route = "controlador/" . $controller_name . ".php";
-        echo $route;
+        //echo $route;
         if(file_exists($route))
         {
             require_once($route);
-            echo "<br>";
-            echo $controller_name;
+            // echo "<br>";
+            // echo $controller_name;
             if(class_exists($controller_name))
             {
                 $c = new $controller_name();
-                echo "<br>";
-                echo "entro en el controlador";
+                // echo "<br>";
+                // echo "entro en el controlador";
                 if(method_exists($c, $action))
                 {
                     $c->$action();

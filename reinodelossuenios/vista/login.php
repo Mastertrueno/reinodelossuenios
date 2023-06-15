@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php
-session_abort();
-session_start();
+//session_start();
 
 ?>
 <html lang="es">
@@ -51,7 +50,7 @@ session_start();
                     </div>
 
                 </form>
-                <button onclick="location.href='../index.html'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
                 <?php
                 require_once "../modelo/DaoUsuarios.php";
 
@@ -64,13 +63,16 @@ session_start();
                         $contraseña != "" && $correo != ""
                     ) {
                         $ini = "#-¿¡!";
-                        $fin = "?/&%)(";
+                                $fin = "?/&%)";
 
                         $contraseña = sha1($ini . $contraseña . $fin);
 
                         //Comprobamos si el login es correcto
 
                         $usu = $dao->Obtener($correo);
+//  echo $usu->__get("contraseña");
+//  echo "<br>";
+//  echo $contraseña;
 
                         if (($usu == NULL) || ($usu->__get("contraseña") != $contraseña)) {
                             echo "<b>ERROR, usuario/contraseña incorrectos </b>";
@@ -78,10 +80,17 @@ session_start();
 
                             echo "<b> Login correcto</b>";
                             echo "<br>";
+                            session_start();
                             echo "<b>Redirigiendo a la pagina principal</b>";
-                            $_SESSION['Usuario'] = $usu;
-
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='4;URL=http://reinodelossuenios.42web.io/'> ";
+                            $_SESSION['Usuario'] = $usu->__get("idusuario");
+                            $_SESSION['Nombre'] = $usu->__get("nombre");
+                            $_SESSION['Apellidos'] = $usu->__get("apellidos");
+                            $_SESSION['Contraseña'] = $usu->__get("contraseña");
+                            $_SESSION['Correo'] = $usu->__get("correo");
+                            $_SESSION['Fechanac'] = $usu->__get("fechanac");
+                            $_SESSION['Rol'] = $usu->__get("rol");
+                            $_SESSION['Dinero'] = $usu->__get("dinero");
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                         }
                     }
                 }

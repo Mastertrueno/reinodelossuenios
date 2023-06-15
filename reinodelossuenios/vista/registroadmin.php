@@ -86,8 +86,16 @@
                                 Seleccione su fecha de nacimiento
                             </div>
                         </div>
+                        <div class="mb-3 rol camp">
+                            <label for="rol">
+                                <h2 class="lang" key="rol">Rol </h2>
+                            </label>
+                            <select name="rol">
+                                <option value="user">Usuario</option>
+                                <option value="adm">Administrador</option>
+                            </select>
+                        </div>
                     </div>
-                    <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
 
                 </form>
@@ -115,6 +123,7 @@ e.preventDefault();
                     $contraseña = $_POST["contraseña"];
                     $contraseña2 = $_POST["contraseña2"];
                     $correo = $_POST["correo"];
+                    $rol = $_POST["rol"];
                     $telefono = $_POST["telefono"];
                     $fechanac = $_POST["fechanac"];
                     if (
@@ -139,22 +148,11 @@ e.preventDefault();
                                 $usu->__set("apellidos", $apellidos);
                                 $usu->__set("correo", $correo);
                                 $usu->__set("fechanac", $fechanac);
-                                $usu->__set("rol", "user");
+                                $usu->__set("rol", $rol);
                                 $usu->__set("telefono", $telefono);
                                 $usu->__set("dinero", 0);
                                 $dao->Insertar($usu);
                                 echo "<b> Usuario creado correctamente</b>";
-                                $_SESSION['Usuario'] = $usu->__get("idusuario");
-                                $_SESSION['Nombre'] = $usu->__get("nombre");
-                                $_SESSION['Apellidos'] = $usu->__get("apellidos");
-                                $_SESSION['Contraseña'] = $usu->__get("contraseña");
-                                $_SESSION['Correo'] = $usu->__get("correo");
-                                $_SESSION['Fechanac'] = $usu->__get("fechanac");
-                                $_SESSION['Rol'] = $usu->__get("rol");
-                                $_SESSION['Dinero'] = $usu->__get("dinero");
-                                echo "<br>";
-                                echo "<b>Redirigiendo a la pagina principal</b>";
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                         }
                     } else {

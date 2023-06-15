@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +15,12 @@
     <link href="../estilos/inicio.css" rel="stylesheet">
 </head>
 
-<body onload="">
+<body onload="Userlogged()">
     <header class="row">
-        <img src="imagenes/logo.png" class="header_image" itemprop="logo" itemscope
-            itemtype="https://creativecommons.org/licenses/by-sa/4.0/" alt="logo de la pagina">
-        <div class="barra">
+        <img src="imagenes/logo.png" class="header_image" itemprop="logo" itemscope itemtype="https://creativecommons.org/licenses/by-sa/4.0/" alt="logo de la pagina">
+        <div class="barra col-md-3">
             <label for="buscador" class="lang" key="buscador">Buscador</label>
-            <input id="buscador" type="search">
+            <input id="buscador" name="buscador" type="search">
             <a class="btn" href=""><img src="imagenes/lupa.jpg" title="Buscar" class="nav_img" alt="lupa" /></a>
         </div>
         <!-- <div>
@@ -25,52 +28,156 @@
             <button onclick="mostrarInicio()">Inicio</button>
 
         </div> -->
-        <nav>
-            <button onclick="">Ofertas</button>
-            <button onclick="">Novedades</button>
-            <div class="adminmod">
+        <nav class="col-md-3">
+            <button onclick="mostrarOfertas()">Ofertas</button>
+            <button onclick="mostrarNovedades()">Novedades</button>
+            <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"] == "adm") : ?>
+                <div class="adminmod">
 
-                <button onclick="location.href='vista/actualizarusu.php'">Actualizar usuario</button>
-                <button onclick="location.href='vista/actualizarusu.php'">Actualizar producto</button>
-                <button onclick="location.href='vista/guardaproductos.php'">Añadir producto</button>
-                <button onclick="location.href='vista/guardaproveedor.php'">Añadir proveedor</button>
-            </div>
+                    <button onclick="location.href='vista/actualizarusu.php'">Actualizar usuario</button>
+                    <button onclick="location.href='vista/actualizarusu.php'">Actualizar producto</button>
+                    <button onclick="location.href='vista/guardaproductos.php'">Añadir producto</button>
+                    <button onclick="location.href='vista/guardaproveedor.php'">Añadir proveedor</button>
+                    <button onclick="location.href='vista/registroadmin.php'">Añadir usuario adm</button>
+                </div>
+            <?php endif; ?>
+
         </nav>
-        <div class="sesion">
-            <div id="sesionboton">
-                <button onclick="location.href='vista/registro.php'">Registrarse</button>
-                <button onclick="location.href='vista/login.php'">Entrar</button>
-            </div>
-            <div id="sesionicon">
-                <a><img class="usu" src="imagenes/usuario.jpg" alt="Icono de usuario"></a>
-            </div>
-
+        <div class="sesion col-md-3">
+            <?php if (isset($_SESSION["Usuario"])) : ?>
+                <div id="sesionicon">
+                    <a href="http://reinodelossuenios.42web.io/vista/detallesusuario.php"><img class="usu" src="imagenes/usuario.jpg" title="Datos Usuario" alt="Icono de usuario"></a>
+                </div>
+            <?php else : ?>
+                <div id="sesionboton">
+                    <button onclick="location.href='vista/registro.php'">Registrarse</button>
+                    <button onclick="location.href='vista/login.php'">Entrar</button>
+                </div>
+            <?php endif; ?>
         </div>
-
-
 
     </header>
     <main>
-    <?php
-    echo "<br>";
-    echo $product;
-    // echo $product->__get("id");
-    // echo $product->__get("nombre");
-    echo "antes del foreach";
-    echo gettype($prods);
-    echo gettype($product);
-    foreach($product as $producto){
-        echo "en el foreach";
-    echo "<h2>".$producto->__get("id")."</h2>";
-    echo "<h2>".$producto->__get("nombre")."</h2>";
-    echo "<h2>".$producto->__get("descripcion")."</h2>";
-    echo "<h2>".$producto->__get("precio")."</h2>";
-    echo "<h2>".$producto->__get("cantidad")."</h2>";
-    echo '<img src="data:image/jpg;base64,'.$producto->__get("imagen") .' " width="160" height="160">';
-    echo "<h2>".$producto->__get("proveedor")."</h2>";
-    
-    }
-    ?>
+        <div class="populares" id="populares">
+            <h1>Populares</h1>
+            <?php
+            // echo $product->__get("nombre");
+            // echo "antes del foreach";
+            // echo gettype($prods);
+            // echo gettype($product);
+            // foreach ($product as $producto) {
+            //     //  echo "en el foreach";
+            //     echo "<h2>" . $producto->__get("id") . "</h2>";
+            //     echo "<h2>" . $producto->__get("nombre") . "</h2>";
+            //     echo "<h2>" . $producto->__get("descripcion") . "</h2>";
+            //     echo "<h2>" . $producto->__get("precio") . "</h2>";
+            //     echo "<h2>" . $producto->__get("cantidad") . "</h2>";
+            //     echo '<img src="data:image/jpg;base64,' . $producto->__get("imagen") . ' " width="160" height="160">';
+            //     echo "<h2>" . $producto->__get("proveedor") . "</h2>";
+
+            //     '<div id="product-list" class="container my-3"><div class="row"> </div></div>';
+            //     echo "<div class>";
+            //     echo "<h2>" . $producto->__get("nombre") . "</h2>";
+            //     echo "<div class='producto'>";
+            //     echo '<img src="data:image/jpg;base64,' . $producto->__get("imagen") . ' " width="160" height="160">';
+            //     echo "<div>";
+            //     echo "Precio " . $producto->__get("precio");
+            //     echo "Disponibles " . $producto->__get("cantidad");
+            //     echo "<p>" . $producto->__get("descripcion") . "</p>";
+            //     echo "</div>";
+            //     echo "</div>";
+            //     echo "</div>";
+            // }
+
+            echo '<div id="product-list" class="container"><div class="row"> </div></div>';
+            //let product = production.next();
+            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            foreach ($product as $producto) {
+                //console.log(product);
+
+                echo '<div class="col-lg-6 col-md-6>
+				<figure class="card card-product-grid card-lg"> 
+					<figcaption class="info-wrap">
+						<div class="row">
+						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+
+							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						</div>
+					</figcaption>
+					
+				</figure>
+			</div>';
+            }
+            echo '</div></div>';
+            echo $_SESSION['Usuario'];
+            echo "<br>";
+            echo $_SESSION['Nombre'];
+            echo "<br>";
+            echo $_SESSION['Apellidos'];
+            echo "<br>";
+            echo $_SESSION['Contraseña'];
+            echo "<br>";
+            echo $_SESSION['Correo'];
+            echo "<br>";
+            echo $_SESSION['Fechanac'];
+            echo "<br>";
+            echo "rol";
+            echo $_SESSION['Rol'];
+            echo "<br>";
+            echo $_SESSION['Dinero'];
+            ?>
+        </div>
+        <div class="novedades" id="novedades">
+            <h1>Novedades</h1>
+            <?php
+            echo '<div id="product-list" class="container"><div class="row"> ';
+            //</div></div>
+            //let product = production.next();
+            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            foreach ($product as $producto) {
+                //console.log(product);
+
+                echo '<div class="col-lg-6 col-md-6>
+				<figure class="card card-product-grid card-lg"> 
+					<figcaption class="info-wrap">
+						<div class="row">
+						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+
+							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						</div>
+					</figcaption>
+					
+				</figure>
+			</div>';
+            }
+            echo '</div></div>';
+            ?>
+        </div>
+        <div class="ofertas" id="ofertas">
+            <h1>Ofertas</h1>
+            <?php
+            echo '<div id="product-list" class="container"><div class="row"> </div></div>';
+            //let product = production.next();
+            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            foreach ($product as $producto) {
+                //console.log(product);
+
+                echo '<div class="col-lg-3 col-md-6>
+				<figure class="card card-product-grid card-lg"> 
+					<figcaption class="info-wrap">
+						<div class="row">
+						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+
+							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						</div>
+					</figcaption>
+					
+				</figure>
+			</div>';
+            }
+            echo '</div></div>';
+            ?>
+        </div>
     </main>
     <aside>
 
@@ -79,6 +186,8 @@
 
 </body>
 <footer>
+
+
     <div class="redes">
         <p id="autor" class="lang" key="autor">Autor: Ivan Elizalde Moreno<br>
         <p id="soporte" class="lang" key="telefono">Soporte: 6667584999<br>
@@ -87,16 +196,11 @@
     </div>
     <script src="../js/main.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-    <script src="./VideoSystemApp.js" type="module"></script>
-     <!--<script src="vista/view.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!--<script src="./VideoSystemApp.js" type="module"></script>
+    <script src="vista/view.js"></script>
     <script src="js/Category.js"></script>
     <script src="js/Country.js"></script>
     <script src="js/Supplier.js"></script>

@@ -30,9 +30,10 @@ class DaoUsuarios extends DB
 
             $param[":nombre"] = $fila->__get("nombre");
             $param[":apellidos"] = $fila->__get("apellidos");
-            $param[":contrasenia"] = $fila->__get("contraseña");
+            $param[":contrasenia"] = $fila->__get("contrasenia");
             $param[":correo"] = $fila->__get("correo");
             $param[":fecha"] = $fila->__get("fechanac");
+            $param[":rol"] = $fila->__get("rol");
             $param[":telefono"] = $fila->__get("telefono");
             $param[":dinero"] = $fila->__get("dinero");
             $this->usuarios[] = $usu;   //Añadimos ese usuario al array de objetos
@@ -55,7 +56,12 @@ class DaoUsuarios extends DB
         $param[":Telefono"] = $usuario->__get("telefono");
         $param[":Dinero"] = $usuario->__get("dinero");
         $consulta = "INSERT INTO usuarios VALUES(:Idusuario,:Nombre,:Apellidos,:Contrasenia,:Correo,:Fecha,:Rol,:Telefono,:Dinero)";
-
+        // foreach ($param as $key => $value) {
+        //     echo $key ;
+        //     echo " ";
+        //       echo $value;
+        //       echo "<br>";
+        //    }
         $this->ConsultaSimple($consulta, $param);
     }
 
@@ -73,25 +79,37 @@ class DaoUsuarios extends DB
 
     public function Actualizar($usuario)
     {
-
         $param = array();
-        $param[":Idusuario"] = $usuario->__get("idusuario");
-        // $param[":Nombre"] = $usuario->__get("nombre");
-        // $param[":Apellidos"] = $usuario->__get("apellidos");
-        $param[":Contraseña"] = $usuario->__get("contraseña");
-        $param[":Correo"] = $usuario->__get("correo");
-        //$param[":Fecha"] = $usuario->__get("fechanac");
-        $param[":Telefono"] = $usuario->__get("telefono");
-        //$param[":Dinero"] = $usuario->__get("dinero");
-        foreach ($param as $key => $value) {
-              echo $key ;
-              echo " ";
-                echo $value;
-                echo "<br>";
-             }
         $consulta = "UPDATE usuarios
-                   SET contraseña=:Contraseña,correo=:Correo,telefono=:Telefono
-                   WHERE idusuario=:Idusuario ";
+        SET ";
+        $param[":Idusuario"] = $usuario->__get("idusuario");
+        if ($usuario->__get("nombre") != null && $usuario->__get("nombre") != "") {
+            $consulta .= "nombre=:Nombre";
+            $param[":Nombre"] = $usuario->__get("nombre");
+        }
+        if ($usuario->__get("apellidos") != null && $usuario->__get("apellidos") != "") {
+            $consulta .= "apellidos=:Apellidos";
+            $param[":Apellidos"] = $usuario->__get("apellidos");
+        }
+        if ($usuario->__get("correo") != null && $usuario->__get("correo") != "") {
+            $consulta .= "correo=:Correo";
+            $param[":Correo"] = $usuario->__get("correo");
+        }
+        if ($usuario->__get("telefono") != null && $usuario->__get("telefono") != "") {
+            $consulta .= "telefono=:Telefono";
+            $param[":Telefono"] = $usuario->__get("telefono");
+        }
+        if ($usuario->__get("dinero") != null && $usuario->__get("dinero") != "") {
+            $consulta .= "dinero=:Dinero";
+            $param[":Dinero"] = $usuario->__get("dinero");
+        }
+        foreach ($param as $key => $value) {
+            echo $key;
+            echo " ";
+            echo $value;
+            echo "<br>";
+        }
+        $consulta.= " WHERE idusuario=:Idusuario";
 
         $this->ConsultaSimple($consulta, $param);
     }
@@ -109,14 +127,33 @@ class DaoUsuarios extends DB
             $fila = $this->filas[0];
 
             $usuario = new Usuario();
+            // echo $fila["idusuario"];
+            // echo "<br>";
+            // echo $fila["nombre"];
+            // echo "<br>";
+            // echo $fila["contrasenia"];
+            // echo "<br>";
+            // echo $fila["apellidos"];
+            // echo "<br>";
+            // echo $fila["correo"];
+            // echo "<br>";
+            // echo $fila["fechanac"];
+            // echo "<br>";
+            // echo $fila["telefono"];
+            // echo "<br>";
+            // echo $fila["rol"];
+            // echo "<br>";
+            // echo $fila["dinero"];
+
 
             $usuario->__set("idusuario", $fila["idusuario"]);
             $usuario->__set("nombre", $fila["nombre"]);
-            $usuario->__set("contraseña", $fila["contraseña"]);
+            $usuario->__set("contraseña", $fila["contrasenia"]);
             $usuario->__set("apellidos", $fila["apellidos"]);
             $usuario->__set("correo", $fila["correo"]);
             $usuario->__set("fechanac", $fila["fechanac"]);
             $usuario->__set("telefono", $fila["telefono"]);
+            $usuario->__set("rol", $fila["rol"]);
             $usuario->__set("dinero", $fila["dinero"]);
         } else {
             $usuario = NULL;

@@ -53,6 +53,7 @@ class DaoProductos extends DB
         $param[":Descripcion"] = $producto->__get("descripcion");
         $param[":Precio"] = $producto->__get("precio");
         $param[":Cantidad"] = $producto->__get("cantidad");
+        
         $param[":Imagen"] = $producto->__get("imagen");
         $param[":Proveedor"] = $producto->__get("proveedor");
         $consulta = "INSERT into productos values (null,:Nombre,:Descripcion,:Precio,:Cantidad,:Imagen,:Proveedor)";
@@ -105,6 +106,34 @@ class DaoProductos extends DB
 
             $producto = new Producto();
 
+            $producto->__set("nombre", $fila["nombre"]);
+            $producto->__set("descripcion", $fila["descripcion"]);
+            $producto->__set("precio", $fila["precio"]);
+            $producto->__set("cantidad", $fila["cantidad"]);
+            $producto->__set("imagen", $fila["imagen"]);
+            $producto->__set("proveedor", $fila["proveedor"]);
+        } else {
+            $producto = NULL;
+        }
+        return $producto;  //Retorna un objeto tipo marca
+
+    }
+    public function Buscar($prod)          //Devuelve una objeto usuario a partir de su Nombre
+    {
+        $param = array();
+
+        $param[":Nombre"] = $prod;
+
+        $consulta = "SELECT * FROM productos where UPPER(nombre) like UPPER('$:Nombre$')";
+
+        $this->ConsultaDatos($consulta, $param);
+
+        if (count($this->filas) >0)     //Si devuelve una fila
+        {
+            $fila = $this->filas[0];
+
+            $producto = new Producto();
+            $producto->__set("id", $fila["id"]);
             $producto->__set("nombre", $fila["nombre"]);
             $producto->__set("descripcion", $fila["descripcion"]);
             $producto->__set("precio", $fila["precio"]);

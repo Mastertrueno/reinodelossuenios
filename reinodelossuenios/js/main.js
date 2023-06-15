@@ -1,13 +1,23 @@
 window.addEventListener('load', function () {
-    this.document.getElementById("sesionicon").style.display = "none";
-   // this.document.getElementById("serie").style.display = "none";
-   //this.document.getElementById("main").style={backgroundColor: rgb(0, 0, 0)}
+    this.document.getElementById("novedades").style.display = "none";
+    this.document.getElementById("ofertas").style.display = "none";
 });
-//como no conseguia de otra forma lo hice por separado
-function mostrarSesionIcon() {
-    this.document.getElementById("sesionboton").style.display = "none";
-    this.document.getElementById("sesionicon").style.display = "block";
-    //this.document.getElementById("serie").style.display = "none";
+
+function mostrarOfertas() {
+    this.document.getElementById("populares").style.display = "none";
+    this.document.getElementById("novedades").style.display = "none";
+    this.document.getElementById("ofertas").style.display = "block";
+}
+function mostrarNovedades() {
+    this.document.getElementById("populares").style.display = "none";
+    this.document.getElementById("ofertas").style.display = "none";
+    this.document.getElementById("novedades").style.display = "block";
+}
+
+function mostrarPopulares() {
+    this.document.getElementById("populares").style.display = "block";
+    this.document.getElementById("ofertas").style.display = "none";
+    this.document.getElementById("novedades").style.display = "none";
 }
 
 
@@ -22,6 +32,11 @@ function darkMode() {
     console.log(element3);
     element3.classList.toggle("darkmodebody");
   }
+//   function Userlogged() {
+//     if($_SESSION['Usuario']!=null){
+//         mostrarSesionIcon();
+//     }
+//   }
 
 /* function changeColor() {
     console.log("ol");

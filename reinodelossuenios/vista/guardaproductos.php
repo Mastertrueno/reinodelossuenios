@@ -2,7 +2,6 @@
 <html lang="es">
 <?php
 session_start();
-session_abort();
 
 require_once "../modelo/DaoProveedor.php";
 $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
@@ -106,7 +105,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                     <button type="submit" class="lang" name="Guardar" value="Guardar">Guardar</button>
 
                 </form>
-                <button onclick="location.href='../index.html'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
                 <?php
                 require_once "../modelo/DaoProductos.php";
                 $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
@@ -134,7 +133,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                                 $fin = "?/&%)(";
                                 $prod = new Producto();
                                 $prod->__set("nombre", $nombre);
-                                $prod->__set("descripcion", $descripcion);
+                                $prod->__set("descripcion", trim($descripcion));
                                 $prod->__set("precio", $precio);
                                 $prod->__set("cantidad", $cantidad);
                                 $imgcod = base64_encode(file_get_contents($imagen));
