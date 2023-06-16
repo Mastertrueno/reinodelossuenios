@@ -23,12 +23,12 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Pagina para añadir Proveedores</h1>
-            <div class="container">
+            <div class="container form">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
 
-                    <button type="submit" class="lang" name="Añadir" value="Añadir">Añadir Proveedor</button>
+                    <button type="submit" class="lang btn seccion" name="Añadir" value="Añadir">Añadir Proveedor</button>
                 </form>
-                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <?php
 
                 if (isset($_POST["Añadir"])) {

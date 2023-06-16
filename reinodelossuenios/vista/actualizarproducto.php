@@ -23,7 +23,7 @@ session_start();
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Registrese para continuar</h1>
-            <div class="container">
+            <div class="container form">
                 <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
@@ -91,10 +91,9 @@ session_start();
                             </div>
                         </div>
                     </div>
-                    <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
-                    <button type="submit" class="lang" name="Enviar" value="Enviar">Enviar</button>
+                    <button type="submit" class="lang btn seccion" name="Enviar" value="Enviar">Enviar</button>
                 </form>
-                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <!-- <script>
                 let form=document.forms[0];
                 form.addEventListener("submit",function(e){

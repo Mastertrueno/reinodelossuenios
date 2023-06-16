@@ -4,13 +4,13 @@
 }
 header{
     height: 150px;
-    background-color: aqua;
+    background-color: rgb(168, 157, 143);
 width: 100%;
 }
 main{
     height: fit-content;
     width: 80%;
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 aside{
     height: auto;
@@ -59,7 +59,7 @@ text-align: center;
     left: 30%;
 }
 nav{
-    background-color: chartreuse;
+    /* background-color: chartreuse; */
     width: 30%;
 }
 .producto{
@@ -68,4 +68,31 @@ nav{
 }
 h1{
     text-align: center;
+}
+.seccion{
+    
+    height: 40px;
+    width: 100px;
+    background-color: rgb(80, 75, 69);
+    color: #e7e7e7;
+    bottom: 0%;
+}
+body{
+    background-color: rgb(105, 190, 161);
+}
+.menu{
+    position: relative;
+}
+.seccion:hover {
+    background: rgb(49, 46, 43);
+    color: #e7e7e7;
+}
+.admbuttons{
+    position: relative;
+    background-color: rgb(80, 75, 69);
+    color: #e7e7e7;
+}
+/* antiquewhite; */
+.prod{
+    background-color: rgb(144, 255, 218);
 }

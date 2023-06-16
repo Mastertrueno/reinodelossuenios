@@ -7,7 +7,27 @@ class ProductController extends BaseController
     {
         $this->modelo = new DaoProductos("epiz_34180798_reinodelossuenios");
     }
-    function index()
+    function nuevos()
+    {
+        $prods = $this->modelo->Listar();
+        //echo $prods[0];
+        try {
+            $this->render("", ["product" => $prods]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    function populares()
+    {
+        $prods = $this->modelo->Listar();
+        //echo $prods[0];
+        try {
+            $this->render("", ["product" => $prods]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    function ofertas()
     {
         $prods = $this->modelo->Listar();
         //echo $prods[0];

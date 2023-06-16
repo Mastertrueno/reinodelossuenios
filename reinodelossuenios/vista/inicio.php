@@ -15,8 +15,8 @@ session_start();
     <link href="../estilos/inicio.css" rel="stylesheet">
 </head>
 
-<body onload="Userlogged()">
-    <header class="row">
+<body onload="Userlogged()" class="row">
+    <header class="row col-12">
         <img src="imagenes/logo.png" class="header_image" itemprop="logo" itemscope itemtype="https://creativecommons.org/licenses/by-sa/4.0/" alt="logo de la pagina">
         <div class="barra col-md-3">
             <label for="buscador" class="lang" key="buscador">Buscador</label>
@@ -29,16 +29,20 @@ session_start();
 
         </div> -->
         <nav class="col-md-3">
-            <button onclick="mostrarOfertas()">Ofertas</button>
-            <button onclick="mostrarNovedades()">Novedades</button>
+            <div class="menu">
+            <button onclick="mostrarPopulares()" class="btn seccion">Populares</button>
+            <button onclick="mostrarOfertas()" class="btn seccion">Ofertas</button>
+            <button onclick="mostrarNovedades()" class="btn seccion">Novedades</button>
+            </div>
+            
             <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"] == "adm") : ?>
                 <div class="adminmod">
 
-                    <button onclick="location.href='vista/actualizarusu.php'">Actualizar usuario</button>
-                    <button onclick="location.href='vista/actualizarusu.php'">Actualizar producto</button>
-                    <button onclick="location.href='vista/guardaproductos.php'">Añadir producto</button>
-                    <button onclick="location.href='vista/guardaproveedor.php'">Añadir proveedor</button>
-                    <button onclick="location.href='vista/registroadmin.php'">Añadir usuario adm</button>
+                    <button class="admbuttons" onclick="location.href='vista/actualizarusu.php'">Actualizar usuario</button>
+                    <button class="admbuttons" onclick="location.href='vista/actualizarusu.php'">Actualizar producto</button>
+                    <button class="admbuttons" onclick="location.href='vista/guardaproductos.php'">Añadir producto</button>
+                    <button class="admbuttons" onclick="location.href='vista/guardaproveedor.php'">Añadir proveedor</button>
+                    <button class="admbuttons" onclick="location.href='vista/registroadmin.php'">Añadir usuario adm</button>
                 </div>
             <?php endif; ?>
 
@@ -57,7 +61,7 @@ session_start();
         </div>
 
     </header>
-    <main>
+    <main class="col-10">
         <div class="populares" id="populares">
             <h1>Populares</h1>
             <?php
@@ -89,19 +93,21 @@ session_start();
             //     echo "</div>";
             // }
 
-            echo '<div id="product-list" class="container"><div class="row"> </div></div>';
+            // echo '<div id="product-list" class="container"><div class="row"> </div></div>';
             //let product = production.next();
-            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            echo '<div id="product-list" class="container my-3 "><div class="row"> ';
             foreach ($product as $producto) {
                 //console.log(product);
 
-                echo '<div class="col-lg-6 col-md-6>
-				<figure class="card card-product-grid card-lg"> 
+                echo '<div class="col-lg-6 col-md-6">
+				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
-						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").'" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 
-							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						<a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
+
 						</div>
 					</figcaption>
 					
@@ -130,20 +136,20 @@ session_start();
         <div class="novedades" id="novedades">
             <h1>Novedades</h1>
             <?php
-            echo '<div id="product-list" class="container"><div class="row"> ';
+            // echo '<div id="product-list" class="container"><div class="row"> ';
             //</div></div>
             //let product = production.next();
             echo '<div id="product-list" class="container my-3"><div class="row"> ';
             foreach ($product as $producto) {
                 //console.log(product);
 
-                echo '<div class="col-lg-6 col-md-6>
-				<figure class="card card-product-grid card-lg"> 
+                echo '<div class="col-lg-6 col-md-6">
+				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
 						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
 
-							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+							<div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 						</div>
 					</figcaption>
 					
@@ -156,31 +162,32 @@ session_start();
         <div class="ofertas" id="ofertas">
             <h1>Ofertas</h1>
             <?php
-            echo '<div id="product-list" class="container"><div class="row"> </div></div>';
+            // echo '<div id="product-list" class="container"><div class="row"> ';
             //let product = production.next();
-            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            echo '<div id="product-list" class="container my-3 "><div class="row"> ';
             foreach ($product as $producto) {
                 //console.log(product);
 
-                echo '<div class="col-lg-3 col-md-6>
-				<figure class="card card-product-grid card-lg"> 
+                echo '<div class="col-lg-6 col-md-6">
+				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
-						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").'" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 
-							<div class="col-md-8"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						<a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
+
 						</div>
 					</figcaption>
 					
 				</figure>
 			</div>';
             }
-            echo '</div></div>';
             ?>
         </div>
     </main>
-    <aside>
-
+    <aside class="col-2">
+a
     </aside>
 
 

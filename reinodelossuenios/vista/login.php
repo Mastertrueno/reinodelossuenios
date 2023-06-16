@@ -23,9 +23,9 @@
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Inicie sesión para continuar</h1>
-            <div class="container">
+            <div class="container form">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
-                    <div class="container2">
+                    <div class="container2 ">
                         <div class="mb-3 email camp">
                             <label for="correo">
                                 <h2 class="lang" key="correo">Correo </h2>
@@ -45,12 +45,12 @@
                             </div>
                         </div>
                         <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
-                        <button type="submit" class="lang" name="Entrar" value="Entrar">Entrar</button>
-                        
+                        <button type="submit" class="lang btn seccion" name="Entrar" value="Entrar">Entrar</button>
+
                     </div>
 
                 </form>
-                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <?php
                 require_once "../modelo/DaoUsuarios.php";
 
@@ -63,16 +63,16 @@
                         $contraseña != "" && $correo != ""
                     ) {
                         $ini = "#-¿¡!";
-                                $fin = "?/&%)";
+                        $fin = "?/&%)";
 
                         $contraseña = sha1($ini . $contraseña . $fin);
 
                         //Comprobamos si el login es correcto
 
                         $usu = $dao->Obtener($correo);
-//  echo $usu->__get("contraseña");
-//  echo "<br>";
-//  echo $contraseña;
+                        //  echo $usu->__get("contraseña");
+                        //  echo "<br>";
+                        //  echo $contraseña;
 
                         if (($usu == NULL) || ($usu->__get("contraseña") != $contraseña)) {
                             echo "<b>ERROR, usuario/contraseña incorrectos </b>";

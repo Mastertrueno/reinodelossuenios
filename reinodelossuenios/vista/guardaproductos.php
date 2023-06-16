@@ -25,7 +25,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Añada un producto</h1>
-            <div class="container">
+            <div class="container form">
                 <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
@@ -51,7 +51,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                             <label for="precio">
                                 <h2 class="lang" key="precio">Precio </h2>
                             </label>
-                            <input id="precio" name="precio" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <input id="precio" name="precio" type="number" step="any" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
                             <div class="invalid-feedback lang" key="pprecio">
                                 Ponga un precio
                             </div>
@@ -102,10 +102,10 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                         </div>
 
                     </div>
-                    <button type="submit" class="lang" name="Guardar" value="Guardar">Guardar</button>
+                    <button type="submit" class="lang btn seccion" name="Guardar" value="Guardar">Guardar</button>
 
                 </form>
-                <button onclick="location.href='http://reinodelossuenios.42web.io'">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <?php
                 require_once "../modelo/DaoProductos.php";
                 $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
