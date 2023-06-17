@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Registro</title>
+    <title>Formulario de inicio de sesion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
     <link href="../estilos/normalize.css" rel="stylesheet">
@@ -44,7 +44,7 @@
                                 Ponga una contraseña
                             </div>
                         </div>
-                        <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
+                        <input id="recordar" type="checkbox" value="recordar" name="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                         <button type="submit" class="lang btn seccion" name="Entrar" value="Entrar">Entrar</button>
 
                     </div>
@@ -90,7 +90,17 @@
                             $_SESSION['Fechanac'] = $usu->__get("fechanac");
                             $_SESSION['Rol'] = $usu->__get("rol");
                             $_SESSION['Dinero'] = $usu->__get("dinero");
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
+
+
+        //                     $campos = explode(" ", $_SESSION["Compra"]);
+        // foreach ($campos as $campo) {
+        //     echo "<td>$campo</td>";
+        // }
+        if(isset($_POST['recordar'])){
+            setcookie("Usuario",$_SESSION["Usuario"],time()+2592000);//1 mes
+        }
+                            //$_SESSION["Compra"]=$usu->__get("idusuario");
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=http://reinodelossuenios.42web.io/'> ";
                         }
                     }
                 }

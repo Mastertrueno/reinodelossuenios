@@ -1,6 +1,13 @@
 <?php
 session_start();
-
+require_once "../modelo/DaoProductos.php";
+$daoprod = new DaoProductos("epiz_34180798_reinodelossuenios");
+if (isset($_GET["url"])) $url = $_GET["url"];
+if (isset($_GET["action"])) $action = $_GET["action"];
+//          echo $url;
+//          echo "<br>";
+//          echo $action;
+// 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,7 +16,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Registro</title>
+    <title>Detalles del producto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
     <link href="../estilos/normalize.css" rel="stylesheet">
@@ -22,85 +29,78 @@ session_start();
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Registrese para continuar</h1>
+            <h1 class="lang" key="registrar">Detalles del producto</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']."?url=".$url; ?>'  method='post' class="was-validated container2"  novalidate>
                     <div class="container2">
-            <?php
-            echo '<div id="product-list" class="container"><div class="row">';
-            //let product = production.next();
-            echo '<div id="product-list" class="container my-3"><div class="row"> ';
-            foreach ($product as $producto) {
-                //console.log(product);
+                        <?php
+                        if (isset($_GET["url"])) $url = $_GET["url"];
+                        //echo $url;
+                        $producto = $daoprod->Obtenerporid($url);
+                        if ($producto != null) {
+                            //let product = production.next();
+                            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+                            //console.log(product);
 
-                echo '<div class="col-lg-3 col-md-6>
-				<figure class="card card-product-grid card-lg"> 
-					<figcaption class="info-wrap">
-						<div class="row">
-                        <h1>'.$producto->__get("nombre").'</h1>
-						<img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160">
+                            echo '<div class="col-lg-3 col-md-6>
+                    <figure class="card card-product-grid card-lg"> 
+                        <figcaption class="info-wrap">
+                            <div class="row">
+                            <h1>' . $producto->__get("nombre") . '</h1>
+                            <img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160">
+    
+                                <div class="col-md-12"><h3>Descripción</h3> <h4>' . $producto->__get("descripcion") . '</h4> </div>
+                             <div class="col-md-12"><h3>Precio ' . $producto->__get("precio") . ' euros</h3> </div>
+                             <div class="col-md-12"><h3>En stock ' . $producto->__get("cantidad") . ' unidades</h3> </div>
+                            </div>
+                        </figcaption>
+                        
+                    </figure>
+                </div>';
 
-							<div class="col-md-8"><h3>Descripción</h3> <h4>' . $producto->__get("descripcion") . '</h2> </div>
-                            <div class="col-md-8"><h3>Precio</h3> <h4>' . $producto->__get("dinero") . '</h2> </div>
-                            <div class="col-md-8"><h3>En stock</h3> <h4>' . $producto->__get("cantidad") . '</h2> </div>
-						</div>
-					</figcaption>
-					
-				</figure>
-			</div>';
-            }
-            echo '</div></div>';
-            ?>
-            <input>
+                            echo '</div></div>';
+                        } else {
+                            echo "Error en la consulta, sin id recibido";
+                        }
+
+                        ?>
+                        <div class="mb-3 cantidad camp">
+                            <label for="cantidad">
+                                <h2 class="lang" key="cantidad">Cantidad </h2>
+                            </label>
+                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <div class="invalid-feedback lang" key="pcantidad">
+                                Ponga una cantidad
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="lang btn seccion" name="Añadir" value="Añadir">Añadir</button>
-                    <button type="submit" class="lang btn seccion" name="Volver" value="Volver">Volver</button>
+                    
+                   <button type="submit" class="lang btn seccion" name="Añadir" value="Añadir">Añadir</button>
                 </form>
-                <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
+                <button onclick="location.href='http://reinodelossuenios.42web.io'" name="Volver" class="btn seccion">Volver</button>
 
                 <?php
                 require_once "../modelo/DaoUsuarios.php";
                 // require_once "display.php";
                 $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
-                if (isset($_POST["Enviar"])) {
-                    $nombre = $_POST["nombre"];
-                    $apellidos = $_POST["apellidos"];
-                    $contraseña = $_POST["contraseña"];
-                    $correo = $_POST["correo"];
-                    $telefono = $_POST["telefono"];
-                    $dinero = $_POST["dinero"];
-                    if (
-                        $nombre != "" || $apellidos != "" || $contraseña != "" || $correo != "" || $telefono != ""
-                        || $dinero != ""
-                    ) {
+                if (isset($_POST["Añadir"]) && $producto != null) {
+                    $cantidad = $_POST["cantidad"];
 
-                        //comprobamos que el usuario no exista
-                        $usu = $dao->Obtener($correo);
-                        if ($usu != null) {
-                            echo "<b>El correo $correo ya esta en uso</b>";
-                        } else {
-                            //creamos una cadena inicial y final para que complemente a la clave
-                            $ini = "#-¿¡!";
-                            $fin = "?/&%)";
-                            $usu = new Usuario();
-                            $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
-                            $usu->__set("nombre", $nombre);
-                            $usu->__set("contraseña", $contraseña);
-                            $usu->__set("apellidos", $apellidos);
-                            $usu->__set("correo", $correo);
-                            $usu->__set("telefono", $telefono);
-                            $usu->__set("dinero", $dinero);
-                            $dao->Actualizar($usu);
-                            echo "<b> Usuario creado correctamente</b>";
-                            echo "<br>";
+                    if ($cantidad != "" && $cantidad > 0) {
+                        if (!isset($_SESSION["Compra"])) {
+                            $_SESSION["Compra"]=$url." ".$cantidad;
+                        }else{
+                            $_SESSION["Compra"] = $_SESSION["Compra"] . "," . $url." ".$cantidad;
                         }
+                        
+                        //    if(isset($_COOKIE["Compra"])){
+
+                        //    }
+                        //setcookie("Carrito", $_SESSION["Compra"], time() + 2592000); //caduca en un mes
+                        echo "<b> Guardado</b>";
+                    } else {
+                        echo "<b>Ponga una cantidad valida<b>";
                     }
-                } else {
-                    echo "<b>RELLENE LOS CAMPOS<b>";
-                }
-                if (isset($_POST["Cerrar_sesion"])) {
-                    session_destroy();
-                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                 }
                 ?>
             </div>

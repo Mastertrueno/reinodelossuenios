@@ -73,13 +73,13 @@ class DaoProductos extends DB
         $this->ConsultaSimple($consulta, $param);
     }
 
-    public function ActualizarPrecio($producto)
+    public function ActualizarPrecio($id,$precio)
     {
 
         $param = array();
 
-        $param[":Id"] = $producto->__get("id");
-        $param[":Cantidad"] = $producto->__get("cantidad");
+        $param[":Id"] = $id;
+        $param[":Cantidad"] = $precio;
 
 
         $consulta = "UPDATE productos
@@ -105,6 +105,38 @@ class DaoProductos extends DB
             $fila = $this->filas[0];
 
             $producto = new Producto();
+
+            $producto->__set("nombre", $fila["nombre"]);
+            $producto->__set("descripcion", $fila["descripcion"]);
+            $producto->__set("precio", $fila["precio"]);
+            $producto->__set("cantidad", $fila["cantidad"]);
+            $producto->__set("imagen", $fila["imagen"]);
+            $producto->__set("proveedor", $fila["proveedor"]);
+        } else {
+            $producto = NULL;
+        }
+        return $producto;  //Retorna un objeto tipo marca
+
+    }
+    public function Obtenerporid($prod)          //Devuelve una objeto usuario a partir de su Nombre
+    {
+        $param = array();
+
+        $param[":Id"] = $prod;
+
+        $consulta = "SELECT * FROM productos where id=:Id";
+        $this->ConsultaDatos($consulta, $param);
+// echo count($this->filas);
+        if (count($this->filas) == 1)     //Si devuelve una fila
+        {
+            $fila = $this->filas[0];
+
+            $producto = new Producto();
+//  echo $fila["nombre"];
+//  echo $fila["descripcion"];
+//  echo $fila["precio"];
+//  echo $fila["cantidad"];
+//  echo $fila["proveedor"];
 
             $producto->__set("nombre", $fila["nombre"]);
             $producto->__set("descripcion", $fila["descripcion"]);
@@ -145,6 +177,20 @@ class DaoProductos extends DB
         }
         return $producto;  //Retorna un objeto tipo marca
 
+    }
+    public function ActualizarStock($id,$cant)
+    {
+        $daoprod = new DaoProductos("epiz_34180798_reinodelossuenios");
+        $param = array();
+
+        $param[":Id"] = $id;
+        $param[":Cantidad"] = $cant;
+        
+        $consulta = "UPDATE productos
+                   set cantidad=:Cantidad
+                   where Id=:Id ";
+
+        $this->ConsultaSimple($consulta, $param);
     }
 }
 ?>

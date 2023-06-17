@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
+                    <input id="recordar" type="checkbox" value="recordar" name="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang btn seccion" name="Enviar" value="Enviar">Enviar</button>
 
                 </form>
@@ -152,6 +152,10 @@ e.preventDefault();
                                 $_SESSION['Fechanac'] = $usu->__get("fechanac");
                                 $_SESSION['Rol'] = $usu->__get("rol");
                                 $_SESSION['Dinero'] = $usu->__get("dinero");
+                                //$_SESSION["Compra"]=$usu->__get("idusuario");
+                                if(isset($_POST['recordar'])){
+                                    setcookie("Usuario",$_SESSION["Usuario"],time()+2592000);//1 mes
+                                }
                                 echo "<br>";
                                 echo "<b>Redirigiendo a la pagina principal</b>";
                                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";

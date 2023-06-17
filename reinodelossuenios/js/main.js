@@ -19,7 +19,11 @@ function mostrarPopulares() {
     this.document.getElementById("ofertas").style.display = "none";
     this.document.getElementById("novedades").style.display = "none";
 }
-
+function Buscar() {
+    this.document.getElementById("populares").style.display = "none";
+    this.document.getElementById("ofertas").style.display = "none";
+    this.document.getElementById("novedades").style.display = "none";
+}
 
 function darkMode() {
     var element = this.document.getElementById("header");
@@ -31,12 +35,27 @@ function darkMode() {
     var element3 = this.document.body;
     console.log(element3);
     element3.classList.toggle("darkmodebody");
-  }
-//   function Userlogged() {
-//     if($_SESSION['Usuario']!=null){
-//         mostrarSesionIcon();
-//     }
-//   }
+}
+function Userlogged() {
+    if (isset($_COOKIE["Usuario"])) {
+        setcookie($_SESSION["Usuario"], $_SESSION["Usuario"], time() + 2592000);//1 mes
+    }
+    // $usu = $dao->Obtener($correo);
+    //                         //  echo $usu->__get("contraseña");
+    //                         //  echo "<br>";
+    //                         //  echo $contraseña;
+
+
+
+    //                             $_SESSION['Usuario'] = $usu->__get("idusuario");
+    //                             $_SESSION['Nombre'] = $usu->__get("nombre");
+    //                             $_SESSION['Apellidos'] = $usu->__get("apellidos");
+    //                             $_SESSION['Contraseña'] = $usu->__get("contraseña");
+    //                             $_SESSION['Correo'] = $usu->__get("correo");
+    //                             $_SESSION['Fechanac'] = $usu->__get("fechanac");
+    //                             $_SESSION['Rol'] = $usu->__get("rol");
+    //                             $_SESSION['Dinero'] = $usu->__get("dinero");
+}
 
 /* function changeColor() {
     console.log("ol");

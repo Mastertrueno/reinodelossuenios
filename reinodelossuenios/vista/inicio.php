@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+// require "../modelo/DaoProductos.php";
+//                 $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="../estilos/normalize.css" rel="stylesheet">
     <link href="../estilos/inicio.css" rel="stylesheet">
@@ -21,7 +22,8 @@ session_start();
         <div class="barra col-md-3">
             <label for="buscador" class="lang" key="buscador">Buscador</label>
             <input id="buscador" name="buscador" type="search">
-            <a class="btn" href=""><img src="imagenes/lupa.jpg" title="Buscar" class="nav_img" alt="lupa" /></a>
+           <button class="btn_buscador"><img src="imagenes/lupa.jpg" title="Buscar" class="nav_img" alt="lupa" onclick="Buscar()"/></button> 
+            <!-- <a class="btn" href=""></a> -->
         </div>
         <!-- <div>
 
@@ -30,11 +32,11 @@ session_start();
         </div> -->
         <nav class="col-md-3">
             <div class="menu">
-            <button onclick="mostrarPopulares()" class="btn seccion">Populares</button>
-            <button onclick="mostrarOfertas()" class="btn seccion">Ofertas</button>
-            <button onclick="mostrarNovedades()" class="btn seccion">Novedades</button>
+                <button onclick="mostrarPopulares()" class="btn seccion">Populares</button>
+                <button onclick="mostrarOfertas()" class="btn seccion">Ofertas</button>
+                <button onclick="mostrarNovedades()" class="btn seccion">Novedades</button>
             </div>
-            
+
             <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"] == "adm") : ?>
                 <div class="adminmod">
 
@@ -50,6 +52,9 @@ session_start();
         <div class="sesion col-md-3">
             <?php if (isset($_SESSION["Usuario"])) : ?>
                 <div id="sesionicon">
+                <?php if (isset($_SESSION["Compra"])) : ?>
+                <button onclick="location.href='vista/pagar.php'">Pagar</button>
+                <?php endif; ?>
                     <a href="http://reinodelossuenios.42web.io/vista/detallesusuario.php"><img class="usu" src="imagenes/usuario.jpg" title="Datos Usuario" alt="Icono de usuario"></a>
                 </div>
             <?php else : ?>
@@ -103,9 +108,9 @@ session_start();
 				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
-                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").'" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . '" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 
-						<a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+						<a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . ' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
                         <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
 
 						</div>
@@ -115,31 +120,30 @@ session_start();
 			</div>';
             }
             echo '</div></div>';
-            echo $_SESSION['Usuario'];
-            echo "<br>";
-            echo $_SESSION['Nombre'];
-            echo "<br>";
-            echo $_SESSION['Apellidos'];
-            echo "<br>";
-            echo $_SESSION['Contraseña'];
-            echo "<br>";
-            echo $_SESSION['Correo'];
-            echo "<br>";
-            echo $_SESSION['Fechanac'];
-            echo "<br>";
-            echo "rol";
-            echo $_SESSION['Rol'];
-            echo "<br>";
-            echo $_SESSION['Dinero'];
+            // echo $_SESSION['Usuario'];
+            // echo "<br>";
+            // echo $_SESSION['Nombre'];
+            // echo "<br>";
+            // echo $_SESSION['Apellidos'];
+            // echo "<br>";
+            // echo $_SESSION['Contraseña'];
+            // echo "<br>";
+            // echo $_SESSION['Correo'];
+            // echo "<br>";
+            // echo $_SESSION['Fechanac'];
+            // echo "<br>";
+            // echo "rol";
+            // echo $_SESSION['Rol'];
+            // echo "<br>";
+            // echo $_SESSION['Dinero'];
             ?>
         </div>
         <div class="novedades" id="novedades">
             <h1>Novedades</h1>
             <?php
-            // echo '<div id="product-list" class="container"><div class="row"> ';
-            //</div></div>
-            //let product = production.next();
-            echo '<div id="product-list" class="container my-3"><div class="row"> ';
+            $prod = $dao->Obtener($nombre);
+
+            echo '<div id="product-list" class="container my-3 "><div class="row"> ';
             foreach ($product as $producto) {
                 //console.log(product);
 
@@ -147,9 +151,11 @@ session_start();
 				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
-						<a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . '" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 
-							<div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="#single-product" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+						<a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . ' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
+
 						</div>
 					</figcaption>
 					
@@ -172,9 +178,9 @@ session_start();
 				<figure class="card card-product-grid card-lg prod"> 
 					<figcaption class="info-wrap">
 						<div class="row">
-                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").'" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . '" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
 
-						<a data-product="' . $producto->__get("nombre") . '" href="'.$producto->__get("id").' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+						<a data-product="' . $producto->__get("nombre") . '" href="http://reinodelossuenios.42web.io/vista/detalleproducto.php?url=' . $producto->__get("id") . ' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
                         <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
 
 						</div>
@@ -183,11 +189,45 @@ session_start();
 				</figure>
 			</div>';
             }
+            echo '</div></div>';
             ?>
         </div>
+        <?php if (isset($_POST["buscador"])) : ?>
+            <div class="buscado" id="buscado">
+                <h1>Resultados</h1>
+                <?php
+                $buscador = $_POST["buscador"];
+                $prod = $dao->Buscar($buscador);
+                echo '<div id="product-list" class="container my-3 "><div class="row"> ';
+                foreach ($product as $producto) {
+                    //console.log(product);
+
+                    echo '<div class="col-lg-6 col-md-6">
+				<figure class="card card-product-grid card-lg prod"> 
+					<figcaption class="info-wrap">
+						<div class="row">
+                        <div class="col-md-12"> <a data-product="' . $producto->__get("nombre") . '" href="' . $producto->__get("id") . '" class="title"><h2>' . $producto->__get("nombre") . '</h2></a> </div>
+
+						<a data-product="' . $producto->__get("nombre") . '" href="' . $producto->__get("id") . ' " class="img-wrap"><img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160"></a>
+                        <div class="col-md-8"> <h2>' . $producto->__get("precio") . ' euros</h2></div>
+
+						</div>
+					</figcaption>
+					
+				</figure>
+			</div>';
+                }
+                ?>
+            </div>
+        <?php else : ?>
+            <div id="vacio">
+                <h2>No se han encontrado productos relacionados</h2>
+            </div>
+        <?php endif; ?>
+
     </main>
     <aside class="col-2">
-a
+        a
     </aside>
 
 

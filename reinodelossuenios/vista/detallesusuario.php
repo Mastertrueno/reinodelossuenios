@@ -9,7 +9,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Registro</title>
+    <title>Detalles del usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </script>
     <link href="../estilos/normalize.css" rel="stylesheet">
@@ -22,7 +22,7 @@ session_start();
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Registrese para continuar</h1>
+            <h1 class="lang" key="registrar">Sus detalles</h1>
             <div class="container form">
                 <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
@@ -107,10 +107,10 @@ session_start();
                         </div>
                         <div class="mb-4 dinero camp ">
                             <label for="dinero">
-                                <h2 class="lang" key="dinero">Dinero </h2>
+                                <h2 class="lang" key="dinero">Saldo </h2>
                             </label>
                             <?php
-                            echo "<h3>$_SESSION[Dinero]</h3>";
+                            echo "<h3>$_SESSION[Dinero] euros</h3>";
                             ?>
                             <h2 class="lang" key="ndinero">Añadir dinero</h2>
                             <input id="dinero" name="dinero" type="number" pattern="[0-9]{1,5}" class="form-control campo">
@@ -134,14 +134,15 @@ session_start();
                     $correo = $_POST["correo"];
                     $telefono = $_POST["telefono"];
                     $dinero = $_POST["dinero"];
+                    //$correoactual=$_SESSION['Correo'];
                     if (
                         $nombre != "" || $apellidos != "" || $contraseña != "" || $correo != "" || $telefono != ""
                         || $dinero != ""
                     ) {
 
                         //comprobamos que el usuario no exista
-                        $usu = $dao->Obtener($correo);
-                        if ($usu != null) {
+                        $usua = $dao->Obtener($correo);
+                        if ($usua != null) {
                             echo "<b>El correo $correo ya esta en uso</b>";
                         } else {
                             //creamos una cadena inicial y final para que complemente a la clave
@@ -149,23 +150,46 @@ session_start();
                             $fin = "?/&%)";
                             $usu = new Usuario();
                             $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
+                            $usu->__set("idusuario", $_SESSION["Usuario"]);
                             $usu->__set("nombre", $nombre);
                             $usu->__set("contraseña", $contraseña);
                             $usu->__set("apellidos", $apellidos);
                             $usu->__set("correo", $correo);
                             $usu->__set("telefono", $telefono);
-                            $usu->__set("dinero", $dinero);
+                            //$usu->__set("dinero", $dinero);
                             $dao->Actualizar($usu);
-                            echo "<b> Usuario creado correctamente</b>";
+                            if ($correo == "") {
+                                $usua = $dao->Obtener($_SESSION["Correo"]);
+                                $sumadinero = $usua->__get("dinero");
+                            } else {
+                                $usua = $dao->Obtener($correo);
+                            }
+
+                            $sumadinero =((int) $dinero) + $usua->__get("dinero");
+                            $dao->ActualizarSaldo($_SESSION["Usuario"], $sumadinero);
+                            echo "<b> Actualizado correctamente</b>";
                             echo "<br>";
+                            if ($correo != "") {
+                                $usuario = $dao->Obtener($correo);
+                            } else {
+                                $usuario = $dao->Obtener($_SESSION['Correo']);
+                            }
+
+                            $_SESSION['Nombre'] = $usuario->__get("nombre");
+                            $_SESSION['Apellidos'] = $usuario->__get("apellidos");
+                            $_SESSION['Contraseña'] = $usuario->__get("contraseña");
+                            $_SESSION['Correo'] = $usuario->__get("correo");
+                            $_SESSION['Dinero'] = $usuario->__get("dinero");
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=http://reinodelossuenios.42web.io/vista/detallesusuario.php'> ";
                         }
                     }
-                } else {
-                    echo "<b>RELLENE LOS CAMPOS<b>";
                 }
                 if (isset($_POST["Cerrar_sesion"])) {
                     session_destroy();
-                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
+                    if (isset($_COOKIE["Usuario"])) {
+                        setcookie("Usuario", $_SESSION["Usuario"], time() - 60); //destrulle la sesion que le recordaba
+                    }
+                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=http://reinodelossuenios.42web.io/'> ";
                 }
                 ?>
             </div>

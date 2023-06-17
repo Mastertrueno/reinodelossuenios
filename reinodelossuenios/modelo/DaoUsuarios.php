@@ -79,38 +79,52 @@ class DaoUsuarios extends DB
 
     public function Actualizar($usuario)
     {
+        $cont=0;
         $param = array();
         $consulta = "UPDATE usuarios
         SET ";
         $param[":Idusuario"] = $usuario->__get("idusuario");
+        //echo $usuario->__get("nombre");
         if ($usuario->__get("nombre") != null && $usuario->__get("nombre") != "") {
-            $consulta .= "nombre=:Nombre";
+            $consulta .= "nombre=:Nombre ";
+            $cont++;
             $param[":Nombre"] = $usuario->__get("nombre");
         }
         if ($usuario->__get("apellidos") != null && $usuario->__get("apellidos") != "") {
-            $consulta .= "apellidos=:Apellidos";
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "apellidos=:Apellidos ";
+            $cont++;
             $param[":Apellidos"] = $usuario->__get("apellidos");
         }
         if ($usuario->__get("correo") != null && $usuario->__get("correo") != "") {
-            $consulta .= "correo=:Correo";
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "correo=:Correo ";
+            $cont++;
             $param[":Correo"] = $usuario->__get("correo");
         }
+        //echo $usuario->__get("telefono");
         if ($usuario->__get("telefono") != null && $usuario->__get("telefono") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
             $consulta .= "telefono=:Telefono";
             $param[":Telefono"] = $usuario->__get("telefono");
         }
-        if ($usuario->__get("dinero") != null && $usuario->__get("dinero") != "") {
-            $consulta .= "dinero=:Dinero";
-            $param[":Dinero"] = $usuario->__get("dinero");
-        }
-        foreach ($param as $key => $value) {
-            echo $key;
-            echo " ";
-            echo $value;
-            echo "<br>";
-        }
+        // if ($usuario->__get("dinero") != null && $usuario->__get("dinero") != "") {
+        //     $consulta .= "dinero=:Dinero";
+        //     $param[":Dinero"] = $usuario->__get("dinero");
+        // }
+        // foreach ($param as $key => $value) {
+        //     echo $key;
+        //     echo " ";
+        //     echo $value;
+        //     echo "<br>";
+        // }
         $consulta.= " WHERE idusuario=:Idusuario";
-
         $this->ConsultaSimple($consulta, $param);
     }
 
@@ -127,23 +141,23 @@ class DaoUsuarios extends DB
             $fila = $this->filas[0];
 
             $usuario = new Usuario();
-            // echo $fila["idusuario"];
-            // echo "<br>";
-            // echo $fila["nombre"];
-            // echo "<br>";
-            // echo $fila["contrasenia"];
-            // echo "<br>";
-            // echo $fila["apellidos"];
-            // echo "<br>";
-            // echo $fila["correo"];
-            // echo "<br>";
-            // echo $fila["fechanac"];
-            // echo "<br>";
-            // echo $fila["telefono"];
-            // echo "<br>";
-            // echo $fila["rol"];
-            // echo "<br>";
-            // echo $fila["dinero"];
+            //  echo $fila["idusuario"];
+            //  echo "<br>";
+            //  echo $fila["nombre"];
+            //  echo "<br>";
+            //  echo $fila["contrasenia"];
+            //  echo "<br>";
+            //  echo $fila["apellidos"];
+            //  echo "<br>";
+            //  echo $fila["correo"];
+            //  echo "<br>";
+            //  echo $fila["fechanac"];
+            //  echo "<br>";
+            //  echo $fila["telefono"];
+            //  echo "<br>";
+            //  echo $fila["rol"];
+            //  echo "<br>";
+            //  echo $fila["dinero"];
 
 
             $usuario->__set("idusuario", $fila["idusuario"]);
@@ -159,6 +173,21 @@ class DaoUsuarios extends DB
             $usuario = NULL;
         }
         return $usuario;  //Retorna un objeto tipo usuario
+    }
+    public function ActualizarSaldo($id,$dinero)
+    {
+        $param = array();
+        $consulta = "UPDATE usuarios SET dinero=:Dinero  WHERE idusuario=:Idusuario";
+            $param[":Dinero"] = $dinero;
+            $param[":Idusuario"] = $id;
+        foreach ($param as $key => $value) {
+            echo $key;
+            echo " ";
+            echo $value;
+            echo "<br>";
+        }
+
+        $this->ConsultaSimple($consulta, $param);
     }
 }
 ?>

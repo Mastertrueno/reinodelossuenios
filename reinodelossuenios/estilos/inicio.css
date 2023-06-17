@@ -21,7 +21,7 @@ aside{
 footer{
     /* position: fixed;
     display: block; */
-    background-color: blueviolet;
+    background-color: rgb(168, 157, 143);
     width: 100%;
     bottom: 0%;
     display: grid;
@@ -95,4 +95,11 @@ body{
 /* antiquewhite; */
 .prod{
     background-color: rgb(144, 255, 218);
+}
+.btn_buscador{
+
+    background-color: rgb(80, 75, 69);
+}
+.btn_buscador:hover {
+    background: rgb(49, 46, 43);
 }
