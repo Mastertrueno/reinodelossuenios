@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+require_once "../modelo/DaoProveedor.php";
+$daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
+require_once "../modelo/DaoCategorias.php";
+$daocat = new DaoCategorias("epiz_34180798_reinodelossuenios");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,79 +22,114 @@ session_start();
 <body>
 
     <main>
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Registrese para continuar</h1>
+            <h1 class="lang" key="registrar">Actualizar producto</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
                     <div class="container2">
+                        <div class="mb-3 camp">
+                            <label for="id ">
+                                <h2 class="lang" key="id">Id producto * </h2>
+                            </label>
+                            <input id="id" name="id" type="text" class="form-control campo">
+                            <!-- <div class="invalid-feedback lang" key="pnombre">
+                                Ponga el nombre del producto
+                            </div> -->
+                        </div>
                         <div class="mb-3 camp">
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,12}" required onchange="fieldsCompleted('nombre')">
-                            <div class="invalid-feedback lang" key="pnombre">
-                                Ponga su nombre
-                            </div>
+                            <input id="nombre" name="nombre" type="text" class="form-control campo">
+                            <!-- <div class="invalid-feedback lang" key="pnombre">
+                                Ponga el nombre del producto
+                            </div> -->
                         </div>
-                        <div class="mb-3 apellidos camp">
-                            <label for="apellidos">
-                                <h2 class="lang" key="apellidos">Apellidos </h2>
+                        <div class="mb-3 descripcion camp">
+                            <label for="descripcion">
+                                <h2 class="lang" key="descripcion">Descripcion </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[0-9A-za-z]{4,24}[ ]{1}[0-9A-za-z]{4,24}" required onchange="fieldsCompleted('apellidos')">
-                            <div class="invalid-feedback lang" key="papellidos">
-                                Ponga sus apellidos
-                            </div>
+                            <textarea id="descripcion" name="descripcion" type="text" class="form-control campo">
+                            </textarea>
+                            <!-- <div class="invalid-feedback lang" key="pdescripcion">
+                                Ponga sus descripcion
+                            </div> -->
                         </div>
-                        <div class="mb-3 contraseña camp">
-                            <label for="contraseña">
-                                <h2 class="lang" key="contraseña">Contraseña </h2>
+                        <div class="mb-3 precio camp">
+                            <label for="precio">
+                                <h2 class="lang" key="precio">Precio </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
-                            <div class="invalid-feedback lang" key="pcontraseña">
-                                Ponga una contraseña (8 minimo, sin caracteres especiales)
-                            </div>
-                        </div>
-                        <div class="mb-3 contraseña camp">
-                            <label for="contraseña">
-                                <h2 class="lang">Confirmación Contraseña </h2>
-                            </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
-                            <div class="invalid-feedback lang" key="pcontraseña">
-                                Confirma la contraseña
-                            </div>
-                        </div>
-                        <div class="mb-3 email camp">
-                            <label for="correo">
-                                <h2 class="lang" key="correo">Correo </h2>
-                            </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
-                            <div class="invalid-feedback lang" key="pemail">
-                                Ponga su correo electronico
-                            </div>
+                            <input id="precio" name="precio" type="number" step="any" pattern="[0-9]{1,5}" class="form-control campo">
+                            <!-- <div class="invalid-feedback lang" key="pprecio">
+                                Ponga un precio
+                            </div> -->
                         </div>
 
-                        <div class="mb-3 telefono camp">
-                            <label for="telefono">
-                                <h2 class="lang" key="Telefono">Telefono</h2>
+                        <div class="mb-3 cantidad camp">
+                            <label for="cantidad">
+                                <h2 class="lang" key="cantidad">Cantidad </h2>
                             </label>
-                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required onchange="fieldsCompleted('telefono')">
-                            <div class="invalid-feedback lang" key="ptelefono">
-                                Ponga su telefono
-                            </div>
+                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo">
+                            <!-- <div class="invalid-feedback lang" key="pcantidad">
+                                Ponga una cantidad
+                            </div> -->
                         </div>
-                        <div class="mb-3 fechanac camp">
-                            <label for="fechanac">
-                                <h2 class="lang" key="fecha">Fecha nacimiento </h2>
+                        <div class="mb-3 foto camp">
+                            <label for="foto">
+                                <h2 class="lang" key="fecha">Foto</h2>
                             </label>
-                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('fechanac')">
-                            <div class="invalid-feedback lang" key="pfecha">
-                                Seleccione su fecha de nacimiento
-                            </div>
+                            <input id="foto" name="foto" type="file" class="form-control ">
+                            <!-- <div class="invalid-feedback lang" key="pfoto">
+                                Seleccione la imagen del producto
+                            </div> -->
+                        </div>
+                        <div class="mb-3 camp">
+                            <h2 class="lang" key="cantidad">Proveedor</h2>
+                            <select name="proveedor">
+                                <?php
+                                echo "<script>console.log('antes de require')</script>";
+
+
+                                echo "<script>console.log('antes de listar')</script>";
+                                $daoprov->Listar();
+                                echo "<script>console.log('despues de listar')</script>";
+                                echo '<option value=""> </option>';
+
+                                foreach ($daoprov->proveedor as $prov) {
+                                    echo "<script>console.log('entro')</script>";
+                                    echo "<script>console.log(" . $prov->__get('Id_proveedor') . ")</script>";
+                                    echo "<option value=" . $prov->__get('Id_proveedor');
+
+                                    // if ($pais == $fila['id_proveedor']) {
+                                    //   echo " selected ";
+                                    // }
+
+                                    echo "> " . $prov->__get('Id_proveedor') . "</option>";
+                                }
+
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3 camp">
+                            <h2 class="lang" key="categoria">Categoria</h2>
+                            <select name="categoria">
+                                <?php
+                                echo '<option value=""> </option>';
+                                $daocat->Listar();
+                                echo "<script>console.log('Antes de categoria')</script>";
+                                foreach ($daocat->categorias as $cat) {
+                                    echo "<script>console.log(" . $cat->__get('nombre') . ")</script>";
+                                    echo "<option value=" . $cat->__get('id')."> " . $cat->__get('nombre') . "</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
-                    <button type="submit" class="lang btn seccion" name="Enviar" value="Enviar">Enviar</button>
+                    <button type="submit" class="lang btn seccion" name="Actualizar" value="Actualizar">Actualizar</button>
+
                 </form>
                 <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <!-- <script>
@@ -102,58 +140,71 @@ e.preventDefault();
                 </script> -->
 
                 <?php
-                require_once "../modelo/DaoUsuarios.php";
+                require_once "../modelo/DaoProductos.php";
                 // require_once "display.php";
-                $dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
-                if (isset($_POST["Enviar"])) {
+                $dao = new DaoProductos("epiz_34180798_reinodelossuenios");
+                if (isset($_POST["Actualizar"])) {
+                    $id = $_POST["id"];
                     $nombre = $_POST["nombre"];
-                    $apellidos = $_POST["apellidos"];
-                    $contraseña = $_POST["contraseña"];
-                    $contraseña2 = $_POST["contraseña2"];
-                    $correo = $_POST["correo"];
-                    $telefono = $_POST["telefono"];
-                    $fechanac = $_POST["fechanac"];
+                    $descripcion = $_POST["descripcion"];
+                    $precio = $_POST["precio"];
+                    $cantidad = $_POST["cantidad"];
+                    $imagen = $_FILES['foto']['tmp_name'];
+                    $proveedor = $_POST["proveedor"];
+                    $categoria = $_POST["categoria"];
+                    
                     if (
-                        $nombre != "" && $apellidos != "" && $contraseña != "" && $correo != "" && $telefono != ""
-                        && $fechanac != ""
+                        $id != "" && ($nombre != "" || $descripcion != "" || $precio != "" || $cantidad != "" || $imagen != ""
+                        || $proveedor != "" || $categoria != "")
                     ) {
-                        if ($contraseña != $contraseña2) {
-                            echo "<b>Error las contraseñas son distintas</b>";
+                        if (($precio <= 0 && $precio != "") || ($cantidad <= 0 && $cantidad != "")) {
+                            echo "<b>Error: precio o cantidad no valida</b>";
                         } else {
                             //comprobamos que el usuario no exista
-                            $usu = $dao->Obtener($correo);
-                            if ($usu == null) {
-                                echo "<b>El correo $correo no existe</b>";
+                            $prod = $dao->Obtenerporid($id);
+                            if ($prod == null) {
+                                echo "<b>El producto $id no existe</b>";
                             } else {
-                                $id = $usu->__get("idusuario");
-
                                 //creamos una cadena inicial y final para que complemente a la clave
-                                $ini = "#-¿¡!";
-                                $fin = "?/&%)";
-                                $usu = new Usuario();
-                                $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
-                                $usu->__set("idusuario", $id);
-                                echo "el id " . $id;
-                                $usu->__set("nombre", $nombre);
-                                $usu->__set("contraseña", $contraseña);
-                                $usu->__set("apellidos", $apellidos);
-                                $usu->__set("correo", $correo);
-                                $usu->__set("fechanac", $fechanac);
-                                $usu->__set("telefono", $telefono);
-                                $usu->__set("dinero", 0);
-                                $dao->Actualizar($usu);
-                                echo "<b>Usuario actualizado correctamente</b>";
-                                //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
+                                $prod2 = $dao->Obtener($nombre);
+                                if ($prod2 != null) {
+                                    echo "<b>El nombre $nombre ya esta en uso</b>";
+                                } else {
+                                    $nuevacantidad = $prod->__get("cantidad") + (int)$cantidad;
+                                    // echo "nueva cantidad ".$nuevacantidad;
+                                    // echo "cantidad ".$cantidad;
+                                    $prod = new Producto();
+                                    $prod->__set("id", $id);
+                                    $prod->__set("nombre", $nombre);
+                                    $prod->__set("descripcion", trim($descripcion));
+                                    $prod->__set("precio", $precio);
+                                    $prod->__set("cantidad", $nuevacantidad);
+                                    if($imagen==null){
+                                        $imgcod = "";
+                                    }else{
+                                        $imgcod = base64_encode(file_get_contents($imagen));
+                                    }
+                                    // $imgcod = base64_encode($imagen);
+                                    $prod->__set("imagen", $imgcod);
+                                    $prod->__set("proveedor", $proveedor);
+                                    $prod->__set("categoria", $categoria);
+                                    $dao->Actualizar($prod);
+                                    echo "<b>Producto actualizado correctamente</b>";
+                                    //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
+                                }
                             }
                         }
                     } else {
 
-                        echo "RELLENE LOS CAMPOS";
+                        echo "<b>RELLENE LOS CAMPOS</b>";
                     }
                 }
                 ?>
             </div>
         </div>
+        <?php else : ?>
+            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php endif ; ?>
     </main>
 </body>
 

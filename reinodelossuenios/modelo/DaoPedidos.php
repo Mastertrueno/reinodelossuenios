@@ -49,16 +49,21 @@ class DaoPedidos extends DB
     {
         $param = array();
 
-        $param[":Idpedido"] = $producto->__get("idpedido");
         $param[":Idusuario"] = $producto->__get("idusuario");
         $param[":Fecha"] = $producto->__get("fecha");
         $param[":Idproducto"] = $producto->__get("idproducto");
         
         $param[":Cantidad"] = $producto->__get("cantidad");
-        $param[":Precioproducto"] = $producto->__get("precioproducto");
+        $param[":Precioproducto"] = $producto->__get("precio_producto");
         $param[":Total"] = $producto->__get("total");
-        $consulta = "INSERT into pedidos values (null,:Idusuario,:Fecha,:Idproducto,:Cantidad,:Cantidad,:Precioproducto,:Total)";
 
+        $consulta = "INSERT into pedidos values (null,:Idusuario,:Fecha,:Idproducto,:Cantidad,:Precioproducto,:Total)";
+        // foreach ($param as $key => $value) {
+        //     echo $key ;
+        //     echo " ";
+        //       echo $value;
+        //      echo "<br>";
+        //    }
         $this->ConsultaSimple($consulta, $param);
     }
 

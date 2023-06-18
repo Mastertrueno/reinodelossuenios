@@ -19,11 +19,11 @@ function mostrarPopulares() {
     this.document.getElementById("ofertas").style.display = "none";
     this.document.getElementById("novedades").style.display = "none";
 }
-function Buscar() {
-    this.document.getElementById("populares").style.display = "none";
-    this.document.getElementById("ofertas").style.display = "none";
-    this.document.getElementById("novedades").style.display = "none";
-}
+// function Buscar() {
+//     this.document.getElementById("populares").style.display = "none";
+//     this.document.getElementById("ofertas").style.display = "none";
+//     this.document.getElementById("novedades").style.display = "none";
+// }
 
 function darkMode() {
     var element = this.document.getElementById("header");

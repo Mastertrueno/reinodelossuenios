@@ -153,9 +153,14 @@ e.preventDefault();
                                 $_SESSION['Rol'] = $usu->__get("rol");
                                 $_SESSION['Dinero'] = $usu->__get("dinero");
                                 //$_SESSION["Compra"]=$usu->__get("idusuario");
-                                if(isset($_POST['recordar'])){
-                                    setcookie("Usuario",$_SESSION["Usuario"],time()+2592000);//1 mes
-                                }
+                                // if (isset($_POST['recordar'])) {
+                                //     setcookie("Usuario", $_SESSION["Usuario"], time() + 2592000); //1 mes
+                                // }else{
+                                //     if(){
+
+                                //     }
+                                //     setcookie("Usuario", $_SESSION["Usuario"], time() -60); //1 mes
+                                // }
                                 echo "<br>";
                                 echo "<b>Redirigiendo a la pagina principal</b>";
                                 echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";

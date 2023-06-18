@@ -14,8 +14,6 @@ class DaoProveedor extends DB
         $this->dbname = $base;
     }
 
-
-
     public function Listar()             //Cargar el contenido de la tabla Proveedor
     {
         $param = array();
@@ -58,31 +56,5 @@ class DaoProveedor extends DB
 
         $this->ConsultaSimple($consulta, $param);
     }
-
-
-    // public function Obtener($prod)          //Devuelve una objeto usuario a partir de su Nombre
-    // {
-    //     $param = array();
-
-    //     $param[":Nombre"] = $prod;
-
-    //     $consulta = "SELECT * FROM proveedor where nombre=:Nombre";
-
-    //     $this->ConsultaDatos($consulta, $param);
-
-    //     if (count($this->filas) == 1)     //Si devuelve una fila
-    //     {
-    //         $fila = $this->filas[0];
-
-    //         $producto = new Producto();
-
-    //         $producto->__set("id", $fila["id"]);
-            
-    //     } else {
-    //         $producto = NULL;
-    //     }
-    //     return $producto;  //Retorna un objeto tipo marca
-
-    // }
 }
 ?>

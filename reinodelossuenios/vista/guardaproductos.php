@@ -5,6 +5,8 @@ session_start();
 
 require_once "../modelo/DaoProveedor.php";
 $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
+require_once "../modelo/DaoCategorias.php";
+$daocat = new DaoCategorias("epiz_34180798_reinodelossuenios");
 ?>
 
 <head>
@@ -21,7 +23,8 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
 <body>
 
     <main>
-
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
+                   
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Añada un producto</h1>
@@ -61,7 +64,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                             <label for="cantidad">
                                 <h2 class="lang" key="cantidad">Cantidad </h2>
                             </label>
-                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('cantidad')">
                             <div class="invalid-feedback lang" key="pcantidad">
                                 Ponga una cantidad
                             </div>
@@ -76,7 +79,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                             </div>
                         </div>
                         <div class="mb-3 camp">
-                            <h2 class="lang" key="cantidad">Proveedor</h2>
+                            <h2 class="lang" key="proveedor">Proveedor</h2>
                             <select name="proveedor">
                                 <?php
                                 echo "<script>console.log('antes de require')</script>";
@@ -100,7 +103,19 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                                 ?>
                             </select>
                         </div>
-
+                        <div class="mb-3 camp">
+                            <h2 class="lang" key="categoria">Categoria</h2>
+                            <select name="categoria">
+                                <?php
+                                $daocat->Listar();
+                                echo "<script>console.log('Antes de categoria')</script>";
+                                foreach ($daocat->categorias as $cat) {
+                                    echo "<script>console.log(" . $cat->__get('nombre') . ")</script>";
+                                    echo "<option value=" . $cat->__get('id')."> " . $cat->__get('nombre') . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="lang btn seccion" name="Guardar" value="Guardar">Guardar</button>
 
@@ -117,6 +132,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                     $cantidad = $_POST["cantidad"];
                     $imagen = $_FILES['foto']['tmp_name'];
                     $proveedor = $_POST["proveedor"];
+                    $categoria = $_POST["categoria"];
                     if (
                         $nombre != "" && $descripcion != "" && $precio != "" && $cantidad != "" && $imagen != ""
                     ) {
@@ -140,6 +156,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                                 // $imgcod = base64_encode($imagen);
                                 $prod->__set("imagen", $imgcod);
                                 $prod->__set("proveedor", $proveedor);
+                                $prod->__set("categoria", $categoria);
                                 $dao->Insertar($prod);
                                 echo "<b>Producto creado correctamente</b>";
                                 //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
@@ -152,6 +169,9 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
                 ?>
             </div>
         </div>
+        <?php else : ?>
+            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php endif ; ?>
     </main>
 </body>
 

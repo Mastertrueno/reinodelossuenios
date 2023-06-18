@@ -24,31 +24,32 @@ $total = 0;
 </head>
 
 <body>
-    <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+    <div class="form">
+        <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
 
-        <?php
-        // echo $_SESSION["Compra"];
-        $productos = explode(",",  $_SESSION["Compra"]);
-        echo '<div id="product-list" class="container my-3 "><div class="row"> ';
-        foreach ($productos as $producto) {
-            //console.log(product);
-            // echo $producto;
-            $campos = explode(" ",  $producto);
-            $cont = 0;
-            foreach ($campos as $producto) {
-                if ($cont == 0) {
-                    $id = $producto;
-                    // echo "id ".$id;
-                    // echo "<br>";
-                    $cont++;
-                } else {
-                    $cantidad = $producto;
+            <?php
+            // echo $_SESSION["Compra"];
+            $productos = explode(",",  $_SESSION["Compra"]);
+            echo '<div id="product-list" class="container my-3 "><div class="row"> ';
+            foreach ($productos as $producto) {
+                //console.log(product);
+                // echo $producto;
+                $campos = explode(" ",  $producto);
+                $cont = 0;
+                foreach ($campos as $producto) {
+                    if ($cont == 0) {
+                        $id = $producto;
+                        // echo "id ".$id;
+                        // echo "<br>";
+                        $cont++;
+                    } else {
+                        $cantidad = $producto;
 
-                    // echo "Cantidad ".$cantidad;
+                        // echo "Cantidad ".$cantidad;
+                    }
                 }
-            }
-            $prod = $daoprod->Obtenerporid($id);
-            echo '<div class="col-lg-4 col-md-4">
+                $prod = $daoprod->Obtenerporid($id);
+                echo '<div class="col-lg-4 col-md-4">
      <figure class="card card-product-grid card-lg"> 
 	 				<figcaption class="info-wrap">
 	 					<div class="row">
@@ -59,20 +60,25 @@ $total = 0;
                              
                              <div class="col-md-12"><h3>Precio ' . $prod->__get("precio") . ' euros</h3> </div>
                              <div class="col-md-12"><h3>En stock ' . $prod->__get("cantidad") . ' unidades</h3> </div>
+                             <div class="col-md-12"><h3>A comprar ' . $cantidad . ' unidades</h3> </div>
 	 					</div>
                         
 	 				</figcaption>
-					
+                       <button type="submit" class="lang btn seccion" name="Quitar" value="' . $id . '">Quitar</button>
 	 			</figure>
 	 		</div>';
-            $total = $total + $cantidad * $prod->__get("precio");
-        }
-        echo "<div><h3>Total $total</h3></div>";
-        echo '</div></div>';
-        ?>
-        <button type="submit" class="lang btn seccion" name="Comprar" value="Comprar">Comprar</button>
-    </form>
-    <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
+
+                $total = $total + $cantidad * $prod->__get("precio");
+            }
+            echo "<div><h3>Total $total</h3></div>";
+            echo "<div><h3>Tu Saldo $_SESSION[Dinero]</h3></div>";
+            echo '</div></div>';
+            ?>
+            <button type="submit" class="lang btn seccion" name="Comprar" value="Comprar">Comprar</button>
+        </form>
+        <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
+    </div>
+    
     <?php
     if (isset($_POST["Comprar"])) {
         foreach ($productos as $producto) {
@@ -92,9 +98,9 @@ $total = 0;
                     // echo "Cantidad ".$cantidad;
                 }
             }
-            echo "1 antes de obtener por id";
             $prod = $daoprod->Obtenerporid($id);
             $cantact = $prod->__get("cantidad");
+
             if (($cantact - $cantidad) >= 0) {
                 $valido = true;
             } else {
@@ -102,7 +108,7 @@ $total = 0;
                 break;
             }
         }
-        if ($valido = true) {
+        if ($valido) {
             foreach ($productos as $producto) {
                 //console.log(product);
                 // echo $producto;
@@ -120,30 +126,89 @@ $total = 0;
                         // echo "Cantidad ".$cantidad;
                     }
                 }
-                echo "1 antes de obtener por id en valido";
                 $prod = $daoprod->Obtenerporid($id);
                 $cantact = $prod->__get("cantidad");
                 $restantes = $cantact - $cantidad;
-                $daoprod->ActualizarStock($id, $restantes);
-            }
-            $nuevoprecio = $_SESSION["Dinero"] - $total;
-            if ($nuevoprecio >= 0) {
-                $ped = new Pedido();
-                $time = time();
+                $nuevoprecio = $_SESSION["Dinero"] - $total;
+                if ($nuevoprecio >= 0) {
+                    $ped = new Pedido();
+                    $time = time();
 
-                $fecha = date("d-m-Y (H:i:s)", $time);
-                $ped->__set("idpedido", $_SESSION["Usuario"]);
-                $ped->__set("fecha", $fecha);
-                $ped->__set("idproducto", $idproducto);
-                $ped->__set("cantidad", $cantidad);
-                $ped->__set("precio_producto", $prod->__get("precio"));
-                $ped->__set("total", $cantidad * $prod->__get("precio"));
-                $daoped->Insertar($ped);
-                $daousu->ActualizarSaldo($_SESSION["Usuario"], $nuevoprecio);
-            } else {
-                echo "Saldo insuficiente";
+                    $fecha = date("Y-m-d", $time);
+                    $ped->__set("idusuario", $_SESSION["Usuario"]);
+                    $ped->__set("fecha", $fecha);
+                    $ped->__set("idproducto", $id);
+                    $ped->__set("cantidad", $cantidad);
+                    $ped->__set("precio_producto", $prod->__get("precio"));
+                    $ped->__set("total", $cantidad * $prod->__get("precio"));
+                    // echo "<br>";
+                    // echo "idusuario " . $ped->__get("idusuario");
+                    // echo "<br>";
+                    // echo "Como guardar fecha 2023-06-05 ";
+                    // echo "fecha " . $ped->__get("fecha");
+                    // echo "<br>";
+                    // echo "idprod ", $ped->__get("idproducto");
+                    // echo "<br>";
+                    // echo "cantidad" . $ped->__get("cantidad");
+                    // echo "<br>";
+                    // echo "Precio producto " . $ped->__get("precio_producto");
+                    // echo "<br>";
+                    // echo "total" . $ped->__get("total");
+                    $daoprod->ActualizarStock($id, $restantes);
+                    $daoped->Insertar($ped);
+                    echo "<b>Compra realizada</b>";
+                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=http://reinodelossuenios.42web.io/'> ";
+                    unset($_SESSION["Compra"]);
+                } else {
+                    echo "Saldo insuficiente";
+                }
+            }
+            $daousu->ActualizarSaldo($_SESSION["Usuario"], $nuevoprecio);
+        } else {
+            echo "<b>No ha suficientes unidades de uno o mas articulos de compra</b>";
+        }
+    }
+    if (isset($_POST["Quitar"])) {
+        $iddado = $_POST["Quitar"];
+        $_SESSION["Compra"]="";
+        // echo "la sesion ".$_SESSION["Compra"];
+        // echo "<br>";
+        foreach ($productos as $producto) {
+            //console.log(product);
+            // echo $producto;
+            $campos = explode(" ",  $producto);
+            $cont = 0;
+            foreach ($campos as $producto) {
+                if ($cont == 0) {
+                    $id = $producto;
+                    // echo "id ".$id;
+                    // echo "<br>";
+                    $cont++;
+                } else {
+                    $cantidad = $producto;
+                    // echo "Cantidad ".$cantidad;
+                }
+            }
+            // echo $id;
+            // echo "<br>";
+            // echo $cantidad;
+            if($id!=$iddado){
+                if ($_SESSION["Compra"]=="") {
+                    $_SESSION["Compra"]=$id." ".$cantidad;
+                }else{
+                    $_SESSION["Compra"] = $_SESSION["Compra"] . "," . $id." ".$cantidad;
+                }
             }
         }
+        // echo "<br>";
+        // echo "la sesion al final ".$_SESSION["Compra"];
+        if($_SESSION["Compra"]==""){
+            unset($_SESSION["Compra"]);
+            echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> ";
+        }else{
+            echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/vista/pagar.php'> ";
+        }
+        
     }
     ?>
 </body>

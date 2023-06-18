@@ -42,12 +42,12 @@ if (isset($_GET["action"])) $action = $_GET["action"];
                             echo '<div id="product-list" class="container my-3"><div class="row"> ';
                             //console.log(product);
 
-                            echo '<div class="col-lg-3 col-md-6>
+                            echo '<div class="col-lg-12 col-md-10>
                     <figure class="card card-product-grid card-lg"> 
                         <figcaption class="info-wrap">
                             <div class="row">
                             <h1>' . $producto->__get("nombre") . '</h1>
-                            <img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="160" height="160">
+                            <img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="320px" height="320px">
     
                                 <div class="col-md-12"><h3>Descripción</h3> <h4>' . $producto->__get("descripcion") . '</h4> </div>
                              <div class="col-md-12"><h3>Precio ' . $producto->__get("precio") . ' euros</h3> </div>
@@ -74,8 +74,11 @@ if (isset($_GET["action"])) $action = $_GET["action"];
                             </div>
                         </div>
                     </div>
-                    
+                    <?php if (isset($_SESSION["Usuario"])) : ?>
                    <button type="submit" class="lang btn seccion" name="Añadir" value="Añadir">Añadir</button>
+                   <?php else : ?>
+                    <h2>Para comprar inicie sesion</h2>
+                    <?php endif; ?>
                 </form>
                 <button onclick="location.href='http://reinodelossuenios.42web.io'" name="Volver" class="btn seccion">Volver</button>
 

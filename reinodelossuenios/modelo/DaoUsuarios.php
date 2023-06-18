@@ -118,13 +118,14 @@ class DaoUsuarios extends DB
         //     $consulta .= "dinero=:Dinero";
         //     $param[":Dinero"] = $usuario->__get("dinero");
         // }
-        // foreach ($param as $key => $value) {
-        //     echo $key;
-        //     echo " ";
-        //     echo $value;
-        //     echo "<br>";
-        // }
+        //  foreach ($param as $key => $value) {
+        //      echo $key;
+        //      echo " ";
+        //      echo $value;
+        //      echo "<br>";
+        //  }
         $consulta.= " WHERE idusuario=:Idusuario";
+        //echo $consulta;
         $this->ConsultaSimple($consulta, $param);
     }
 
@@ -180,12 +181,12 @@ class DaoUsuarios extends DB
         $consulta = "UPDATE usuarios SET dinero=:Dinero  WHERE idusuario=:Idusuario";
             $param[":Dinero"] = $dinero;
             $param[":Idusuario"] = $id;
-        foreach ($param as $key => $value) {
-            echo $key;
-            echo " ";
-            echo $value;
-            echo "<br>";
-        }
+        // foreach ($param as $key => $value) {
+        //     echo $key;
+        //     echo " ";
+        //     echo $value;
+        //     echo "<br>";
+        // }
 
         $this->ConsultaSimple($consulta, $param);
     }

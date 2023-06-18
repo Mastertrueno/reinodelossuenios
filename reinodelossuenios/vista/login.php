@@ -92,15 +92,17 @@
                             $_SESSION['Dinero'] = $usu->__get("dinero");
 
 
-        //                     $campos = explode(" ", $_SESSION["Compra"]);
-        // foreach ($campos as $campo) {
-        //     echo "<td>$campo</td>";
-        // }
-        if(isset($_POST['recordar'])){
-            setcookie("Usuario",$_SESSION["Usuario"],time()+2592000);//1 mes
-        }
+                            //                     $campos = explode(" ", $_SESSION["Compra"]);
+                            // foreach ($campos as $campo) {
+                            //     echo "<td>$campo</td>";
+                            // }
+                            // if (isset($_POST['recordar'])) {
+                            //     setcookie("Usuario", $_SESSION["Usuario"], time() + 2592000); //1 mes
+                            // }else{
+                            //     setcookie("Usuario", $_SESSION["Usuario"], time() ); //1 mes
+                            // }
                             //$_SESSION["Compra"]=$usu->__get("idusuario");
-                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=http://reinodelossuenios.42web.io/'> ";
+                            echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                         }
                     }
                 }

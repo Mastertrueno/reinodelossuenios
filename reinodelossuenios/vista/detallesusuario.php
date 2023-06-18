@@ -19,6 +19,7 @@ session_start();
 <body>
 
     <main>
+    <?php if (isset($_SESSION["Usuario"])) : ?>
 
         <div class="container-sm">
 
@@ -119,7 +120,7 @@ session_start();
                     </div>
                     <input id="recordar" type="checkbox" value="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
                     <button type="submit" class="lang btn seccion" name="Enviar" value="Enviar">Enviar</button>
-                    <button type="submit" class="lang btn seccion" name="Cerrar_sesion" value="Cerrar_sesion">Cerrar sesión</button>
+                    <button type="submit" class="lang btn seccion2" name="Cerrar_sesion" value="Cerrar_sesion">Cerrar sesión</button>
                 </form>
                 <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
 
@@ -148,7 +149,8 @@ session_start();
                             //creamos una cadena inicial y final para que complemente a la clave
                             $ini = "#-¿¡!";
                             $fin = "?/&%)";
-                            $usu = new Usuario();
+                            if($nombre != "" || $apellidos != "" || $contraseña != "" || $correo != "" || $telefono != ""){
+                                $usu = new Usuario();
                             $contraseña = sha1($ini . $contraseña . $fin); //se cifra la clave introducida
                             $usu->__set("idusuario", $_SESSION["Usuario"]);
                             $usu->__set("nombre", $nombre);
@@ -158,13 +160,14 @@ session_start();
                             $usu->__set("telefono", $telefono);
                             //$usu->__set("dinero", $dinero);
                             $dao->Actualizar($usu);
+                            }
                             if ($correo == "") {
                                 $usua = $dao->Obtener($_SESSION["Correo"]);
                                 $sumadinero = $usua->__get("dinero");
                             } else {
                                 $usua = $dao->Obtener($correo);
+                                $sumadinero = $usua->__get("dinero");
                             }
-
                             $sumadinero =((int) $dinero) + $usua->__get("dinero");
                             $dao->ActualizarSaldo($_SESSION["Usuario"], $sumadinero);
                             echo "<b> Actualizado correctamente</b>";
@@ -186,14 +189,17 @@ session_start();
                 }
                 if (isset($_POST["Cerrar_sesion"])) {
                     session_destroy();
-                    if (isset($_COOKIE["Usuario"])) {
                         setcookie("Usuario", $_SESSION["Usuario"], time() - 60); //destrulle la sesion que le recordaba
-                    }
+                    
+                    
                     echo "<META HTTP-EQUIV='REFRESH' CONTENT='1;URL=http://reinodelossuenios.42web.io/'> ";
                 }
                 ?>
             </div>
         </div>
+        <?php else : ?>
+            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php endif ; ?>
     </main>
 </body>
 

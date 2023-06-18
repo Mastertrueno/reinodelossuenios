@@ -1,4 +1,4 @@
 <?php
-$buscador = $_POST["buscador"];
-
+if (isset($_GET["url"])) $url = $_GET["url"];
+echo $url;
 ?>

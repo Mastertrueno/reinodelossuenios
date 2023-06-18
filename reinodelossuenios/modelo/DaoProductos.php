@@ -36,8 +36,8 @@ class DaoProductos extends DB
             $producto->__set("cantidad", $fila["cantidad"]);
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
-
-            array_push($this->productos,$producto);   //Añadimos ese usuario al array de objetos
+            $producto->__set("categoria", $fila["categoria"]);
+            array_push($this->productos,$producto);   //Añadimos ese producto al array de objetos
 
         }
         return $this->productos;
@@ -45,7 +45,7 @@ class DaoProductos extends DB
 
 
 
-    public function Insertar($producto)   //Recibe como parámetro un objeto de tipo usuario
+    public function Insertar($producto)   //Recibe como parámetro un objeto de tipo producto
     {
         $param = array();
 
@@ -56,12 +56,13 @@ class DaoProductos extends DB
         
         $param[":Imagen"] = $producto->__get("imagen");
         $param[":Proveedor"] = $producto->__get("proveedor");
-        $consulta = "INSERT into productos values (null,:Nombre,:Descripcion,:Precio,:Cantidad,:Imagen,:Proveedor)";
-
+        $param[":Categoria"] = $producto->__get("categoria");
+        $consulta = "INSERT into productos values (null,:Nombre,:Descripcion,:Precio,:Cantidad,:Imagen,:Proveedor,:Categoria)";
+        
         $this->ConsultaSimple($consulta, $param);
     }
 
-    public function Eliminar($prod)    //Recibe como parámetro el nombre del usuario a eliminar
+    public function Eliminar($prod)    //Recibe como parámetro el nombre del producto a eliminar
     {
         $param = array();
 
@@ -90,7 +91,7 @@ class DaoProductos extends DB
     }
 
 
-    public function Obtener($prod)          //Devuelve una objeto usuario a partir de su Nombre
+    public function Obtener($prod)          //Devuelve una objeto producto a partir de su Nombre
     {
         $param = array();
 
@@ -112,13 +113,14 @@ class DaoProductos extends DB
             $producto->__set("cantidad", $fila["cantidad"]);
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
+            $producto->__set("categoria", $fila["categoria"]);
         } else {
             $producto = NULL;
         }
         return $producto;  //Retorna un objeto tipo marca
 
     }
-    public function Obtenerporid($prod)          //Devuelve una objeto usuario a partir de su Nombre
+    public function Obtenerporid($prod)          //Devuelve una objeto producto a partir de su Nombre
     {
         $param = array();
 
@@ -144,13 +146,14 @@ class DaoProductos extends DB
             $producto->__set("cantidad", $fila["cantidad"]);
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
+            $producto->__set("categoria", $fila["categoria"]);
         } else {
             $producto = NULL;
         }
         return $producto;  //Retorna un objeto tipo marca
 
     }
-    public function Buscar($prod)          //Devuelve una objeto usuario a partir de su Nombre
+    public function Buscar($prod)          //Devuelve una objeto producto a partir de su Nombre
     {
         $param = array();
 
@@ -172,6 +175,7 @@ class DaoProductos extends DB
             $producto->__set("cantidad", $fila["cantidad"]);
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
+            $producto->__set("categoria", $fila["categoria"]);
         } else {
             $producto = NULL;
         }
@@ -192,5 +196,82 @@ class DaoProductos extends DB
 
         $this->ConsultaSimple($consulta, $param);
     }
+    public function Actualizar($producto)
+    {
+        $cont=0;
+        $param = array();
+        $consulta = "UPDATE productos
+        SET ";
+        $param[":Id"] = $producto->__get("id");
+        //echo $producto->__get("id");
+        if ($producto->__get("nombre") != null && $producto->__get("nombre") != "") {
+            $consulta .= "nombre=:Nombre ";
+            $cont++;
+            $param[":Nombre"] = $producto->__get("nombre");
+        }
+        if ($producto->__get("descripcion") != null && $producto->__get("descripcion") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "descripcion=:Descripcion ";
+            $cont++;
+            $param[":Descripcion"] = $producto->__get("descripcion");
+        }
+        if ($producto->__get("precio") != null && $producto->__get("precio") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "precio=:Precio ";
+            $cont++;
+            $param[":Precio"] = $producto->__get("precio");
+        }
+        //echo $producto->__get("cantidad");
+        if ($producto->__get("cantidad") != null && $producto->__get("cantidad") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "cantidad=:Cantidad";
+            $cont++;
+            $param[":Cantidad"] = $producto->__get("cantidad");
+        }
+        if ($producto->__get("imagen") != null && $producto->__get("imagen") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "imagen=:Imagen";
+            $cont++;
+            $param[":Imagen"] = $producto->__get("imagen");
+        }
+        if ($producto->__get("proveedor") != null && $producto->__get("proveedor") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "proveedor=:Proveedor";
+            $cont++;
+            $param[":Proveedor"] = $producto->__get("proveedor");
+        }
+        if ($producto->__get("categoria") != null && $producto->__get("categoria") != "") {
+            if($cont>0){
+                $consulta .=",";
+            }
+            $consulta .= "categoria=:Categoria";
+            $cont++;
+            $param[":Categoria"] = $producto->__get("categoria");
+        }
+         if ($producto->__get("dinero") != null && $producto->__get("dinero") != "") {
+             $consulta .= "dinero=:Dinero";
+             $param[":Dinero"] = $producto->__get("dinero");
+         }
+        //    foreach ($param as $key => $value) {
+        //        echo $key;
+        //        echo " ";
+        //        echo $value;
+        //        echo "<br>";
+        //    }
+        $consulta.= " WHERE id=:Id";
+        //echo $consulta;
+        $this->ConsultaSimple($consulta, $param);
+    }
+    
 }
 ?>

@@ -15,6 +15,7 @@
 <body>
 
     <main>
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
 
         <div class="container-sm">
 
@@ -162,6 +163,9 @@ e.preventDefault();
                 ?>
             </div>
         </div>
+        <?php else : ?>
+            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php endif ; ?>
     </main>
 </body>
 
