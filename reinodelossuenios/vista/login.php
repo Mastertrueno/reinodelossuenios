@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-//session_start();
+session_start();
 
 ?>
 <html lang="es">
@@ -24,13 +24,13 @@
 
             <h1 class="lang" key="registrar">Inicie sesión para continuar</h1>
             <div class="container form">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="container2 needs-validation" novalidate>
                     <div class="container2 ">
                         <div class="mb-3 email camp">
                             <label for="correo">
                                 <h2 class="lang" key="correo">Correo </h2>
                             </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('correo')">
+                            <input id="correo" name="correo" type="email" class="form-control campo" required >
                             <div class="invalid-feedback lang" key="pcorreo">
                                 Ponga su correo electronico
                             </div>
@@ -39,16 +39,17 @@
                             <label for="contraseña">
                                 <h2 class="lang" key="contraseña">Contraseña </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Ponga una contraseña
                             </div>
                         </div>
                         <input id="recordar" type="checkbox" value="recordar" name="recordar"><label for="recordar" class="lang" key="recordar"> Recordar usuario</label><br>
-                        <button type="submit" class="lang btn seccion" name="Entrar" value="Entrar">Entrar</button>
+                        <br>
+                    <button type="submit" class="lang btn seccion" name="Entrar" value="Entrar">Entrar</button>
 
                     </div>
-
+                    
                 </form>
                 <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
                 <?php
@@ -86,29 +87,44 @@
                             $_SESSION['Nombre'] = $usu->__get("nombre");
                             $_SESSION['Apellidos'] = $usu->__get("apellidos");
                             $_SESSION['Contraseña'] = $usu->__get("contraseña");
+                            $_SESSION['Telefono'] = $usu->__get("telefono");
                             $_SESSION['Correo'] = $usu->__get("correo");
                             $_SESSION['Fechanac'] = $usu->__get("fechanac");
                             $_SESSION['Rol'] = $usu->__get("rol");
                             $_SESSION['Dinero'] = $usu->__get("dinero");
-
+                            // echo $_SESSION['Usuario'];
+                            // echo $_SESSION['Nombre'];
+                            // echo $_SESSION['Apellidos'];
+                            // echo $_SESSION['Contraseña'];
+                            // echo $_SESSION['Correo'];
+                            // echo $_SESSION['Fechanac'];
+                            // echo $_SESSION['Telefono'];
+                            // echo $_SESSION['Rol'];
+                            // echo $_SESSION['Dinero'];
 
                             //                     $campos = explode(" ", $_SESSION["Compra"]);
                             // foreach ($campos as $campo) {
                             //     echo "<td>$campo</td>";
                             // }
-                            // if (isset($_POST['recordar'])) {
-                            //     setcookie("Usuario", $_SESSION["Usuario"], time() + 2592000); //1 mes
-                            // }else{
-                            //     setcookie("Usuario", $_SESSION["Usuario"], time() ); //1 mes
-                            // }
+                            if (isset($_POST['recordar'])) {
+                                setcookie("Usuario", $_SESSION["Correo"], time() + 2592000); //1 mes
+                            }
+                            //  else{
+                            //      setcookie("Usuario", $_SESSION["Usuario"], time()-10); //1 mes
+                            //  }
                             //$_SESSION["Compra"]=$usu->__get("idusuario");
                             echo "<META HTTP-EQUIV='REFRESH' CONTENT='3;URL=http://reinodelossuenios.42web.io/'> ";
                         }
+                    } else {
+                        echo "<br>";
+                        echo "<b>RELLENE LOS CAMPOS<b>";
                     }
                 }
                 ?>
             </div>
         </div>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

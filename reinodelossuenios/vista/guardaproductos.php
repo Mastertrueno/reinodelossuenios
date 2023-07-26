@@ -21,21 +21,36 @@ $daocat = new DaoCategorias("epiz_34180798_reinodelossuenios");
 </head>
 
 <body>
-
+<?php
+// echo $_SESSION['Nombre'];
+// echo "<br>";
+// echo $_SESSION['Apellidos'];
+// echo "<br>";
+// echo $_SESSION['Contraseña'];
+// echo "<br>";
+// echo $_SESSION['Correo'];
+// echo "<br>";
+// echo $_SESSION['Fechanac'];
+// echo "<br>";
+// echo $_SESSION['Telefono'];
+// echo "<br>";
+// echo $_SESSION['Rol'];
+// echo "<br>";
+// echo $_SESSION['Dinero'];?>
     <main>
-    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"]=="adm") : ?>
                    
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Añada un producto</h1>
             <div class="container form">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="container2 needs-validation" novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" required onchange="fieldsCompleted('nombre')">
+                            <input id="nombre" name="nombre" type="text" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pnombre">
                                 Ponga el nombre del producto
                             </div>
@@ -170,9 +185,11 @@ $daocat = new DaoCategorias("epiz_34180798_reinodelossuenios");
             </div>
         </div>
         <?php else : ?>
-            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> "; ?>
             <?php endif ; ?>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

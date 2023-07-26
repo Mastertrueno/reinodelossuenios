@@ -25,7 +25,7 @@ session_start();
 
             <h1 class="lang" key="registrar">Sus detalles</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="container2 needs-validation" novalidate>
                     <div class="container2">
                         <div class="mb-4 camp">
                             <p>
@@ -202,5 +202,7 @@ session_start();
             <?php endif ; ?>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

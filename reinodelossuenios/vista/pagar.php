@@ -25,7 +25,7 @@ $total = 0;
 
 <body>
     <div class="form">
-        <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+        <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="container2 needs-validation" novalidate>
 
             <?php
             // echo $_SESSION["Compra"];
@@ -78,7 +78,7 @@ $total = 0;
         </form>
         <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
     </div>
-    
+
     <?php
     if (isset($_POST["Comprar"])) {
         foreach ($productos as $producto) {
@@ -156,21 +156,22 @@ $total = 0;
                     // echo "total" . $ped->__get("total");
                     $daoprod->ActualizarStock($id, $restantes);
                     $daoped->Insertar($ped);
-                    echo "<b>Compra realizada</b>";
-                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='2;URL=http://reinodelossuenios.42web.io/'> ";
+                    echo "<h2><b>Compra realizada, Redirigiendo a la pagina principal</b></h2>";
+                    echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                     unset($_SESSION["Compra"]);
+                    $daousu->ActualizarSaldo($_SESSION["Usuario"], $nuevoprecio);
+                    $_SESSION["Dinero"] = $nuevoprecio;
                 } else {
-                    echo "Saldo insuficiente";
+                    echo "<h2><b>Saldo insuficiente</b></h2>";
                 }
             }
-            $daousu->ActualizarSaldo($_SESSION["Usuario"], $nuevoprecio);
         } else {
-            echo "<b>No ha suficientes unidades de uno o mas articulos de compra</b>";
+            echo "<h2><b>No ha suficientes unidades de uno o mas articulos de compra</b></h2>";
         }
     }
     if (isset($_POST["Quitar"])) {
         $iddado = $_POST["Quitar"];
-        $_SESSION["Compra"]="";
+        $_SESSION["Compra"] = "";
         // echo "la sesion ".$_SESSION["Compra"];
         // echo "<br>";
         foreach ($productos as $producto) {
@@ -192,25 +193,26 @@ $total = 0;
             // echo $id;
             // echo "<br>";
             // echo $cantidad;
-            if($id!=$iddado){
-                if ($_SESSION["Compra"]=="") {
-                    $_SESSION["Compra"]=$id." ".$cantidad;
-                }else{
-                    $_SESSION["Compra"] = $_SESSION["Compra"] . "," . $id." ".$cantidad;
+            if ($id != $iddado) {
+                if ($_SESSION["Compra"] == "") {
+                    $_SESSION["Compra"] = $id . " " . $cantidad;
+                } else {
+                    $_SESSION["Compra"] = $_SESSION["Compra"] . "," . $id . " " . $cantidad;
                 }
             }
         }
         // echo "<br>";
         // echo "la sesion al final ".$_SESSION["Compra"];
-        if($_SESSION["Compra"]==""){
+        if ($_SESSION["Compra"] == "") {
             unset($_SESSION["Compra"]);
             echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> ";
-        }else{
+        } else {
             echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/vista/pagar.php'> ";
         }
-        
     }
     ?>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

@@ -7,18 +7,19 @@ class DB
 
     private $con; //Propiedad que retorna el objeto PDO resultante de la conexión
 
-    private $host = 'sql202.infinityfree.com';
-    private $user = 'epiz_34180798';
-    private $pass = 'mgvDfwkMNt';
+    private $host = 'localhost';
+    private $user = 'root';
+    private $pass = '';
+    
     protected $dbname;
+
     public $filas = array();
-    public function __construct($base)
-    { //Constructor que recibe la BBDD sobre la que nos vamos a conectar
+
+    public function __construct($base){ //Constructor que recibe la BBDD sobre la que nos vamos a conectar
         $this->dbname = $base;
     }
 
-    private function Conectar()
-    {
+    private function Conectar(){
 
         try {
 

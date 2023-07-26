@@ -3,9 +3,13 @@
     height: 45px;
 }
 header{
-    height: 150px;
+    margin-left: 0.8%;
+    height: fit-content;
     background-color: rgb(168, 157, 143);
 width: 100%;
+}
+.head{
+    margin-top: 10px;
 }
 main{
     height: fit-content;
@@ -19,6 +23,7 @@ aside{
 footer{
     /* position: fixed;
     display: block; */
+    margin-left: 0.8%;
     background-color: rgb(80, 75, 69);
     width: 100%;
     bottom: 0%;
@@ -42,17 +47,18 @@ text-align: center;
 
 }
 .sesion{
-    width: 10%;
-    position: absolute;
-    right: 05%;
+    
+    position: relative;
+    top: 20%;
+    padding-left: 20%;
 }
 .usu{
     height: 75px;
     width: 75px;
 }
 .adminmod{
-    position: absolute;
-    left: 15%;
+    position: relative;
+    left: 20%;
     top: 11%;
 }
 nav{
@@ -89,6 +95,10 @@ body{
     background-color: rgb(80, 75, 69);
     color: #e7e7e7;
 }
+.admbuttons:hover {
+    background: rgb(49, 46, 43);
+    color: #e7e7e7;
+}
 /* antiquewhite; */
 .prod{
     background-color: rgb(144, 255, 218);
@@ -101,10 +111,16 @@ body{
     background: rgb(49, 46, 43);
 }
 .anuncio{
-    width: 100px;
+    width: 100%;
 } 
 a{
     color: black;
     height: 300px;
     width: 100px;
+}
+.centrado{
+    padding-left: 30%;
+}
+.centradot{
+    text-align: center;
 }

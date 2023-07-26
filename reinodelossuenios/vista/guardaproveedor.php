@@ -20,13 +20,13 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
 
 <body>
     <main>
-    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"]=="adm") : ?>
 
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Pagina para añadir Proveedores</h1>
             <div class="container form">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="container2 needs-validation" novalidate>
 
                     <button type="submit" class="lang btn seccion" name="Añadir" value="Añadir">Añadir Proveedor</button>
                 </form>
@@ -48,5 +48,7 @@ $daoprov = new DaoProveedor("epiz_34180798_reinodelossuenios");
             <?php endif ; ?>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

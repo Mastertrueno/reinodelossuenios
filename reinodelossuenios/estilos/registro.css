@@ -50,7 +50,10 @@ body{
     background: rgb(49, 46, 43);
     color: #e7e7e7;
 }
-
+.seccion2:hover {
+    background: rgb(49, 46, 43);
+    color: #e7e7e7;
+}
 /* antiquewhite; */
 .form{
     background-color: rgb(144, 255, 218);

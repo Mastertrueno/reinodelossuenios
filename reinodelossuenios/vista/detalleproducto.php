@@ -31,7 +31,7 @@ if (isset($_GET["action"])) $action = $_GET["action"];
 
             <h1 class="lang" key="registrar">Detalles del producto</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']."?url=".$url; ?>'  method='post' class="was-validated container2"  novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']."?url=".$url; ?>'  method='post' class="container2 needs-validation"  novalidate>
                     <div class="container2">
                         <?php
                         if (isset($_GET["url"])) $url = $_GET["url"];
@@ -47,7 +47,7 @@ if (isset($_GET["action"])) $action = $_GET["action"];
                         <figcaption class="info-wrap">
                             <div class="row">
                             <h1>' . $producto->__get("nombre") . '</h1>
-                            <img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" width="320px" height="320px">
+                            <img src="data:image/jpg;base64, ' . $producto->__get("imagen") . '" >
     
                                 <div class="col-md-12"><h3>Descripción</h3> <h4>' . $producto->__get("descripcion") . '</h4> </div>
                              <div class="col-md-12"><h3>Precio ' . $producto->__get("precio") . ' euros</h3> </div>
@@ -68,7 +68,7 @@ if (isset($_GET["action"])) $action = $_GET["action"];
                             <label for="cantidad">
                                 <h2 class="lang" key="cantidad">Cantidad </h2>
                             </label>
-                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required onchange="fieldsCompleted('precio')">
+                            <input id="cantidad" name="cantidad" type="number" pattern="[0-9]{1,5}" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pcantidad">
                                 Ponga una cantidad
                             </div>
@@ -110,5 +110,7 @@ if (isset($_GET["action"])) $action = $_GET["action"];
         </div>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

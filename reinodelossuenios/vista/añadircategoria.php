@@ -20,13 +20,13 @@ require_once "../modelo/DaoCategorias.php";
 <body>
 
     <main>
-    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"]=="adm") : ?>
 
         <div class="container-sm">
 
-            <h1 class="lang" key="registrar">Añada un producto</h1>
+            <h1 class="lang" key="registrar">Añada una categoria</h1>
             <div class="container form">
-                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="was-validated container2" needs-validation novalidate>
+                <form action='<?php echo $_SERVER['PHP_SELF']; ?>' enctype="multipart/form-data" method='post' class="container2 needs-validation" novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
@@ -64,6 +64,7 @@ require_once "../modelo/DaoCategorias.php";
                                 //echo "<META HTTP-EQUIV='REFRESH' CONTENT='5;URL=http://reinodelossuenios.42web.io/'> ";
                             }
                     } else {
+                        echo "<h3><b>Ponga un nombre</b></h3>";
                         }
                     }
                 
@@ -75,5 +76,7 @@ require_once "../modelo/DaoCategorias.php";
             <?php endif ; ?>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

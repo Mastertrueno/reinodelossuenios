@@ -20,13 +20,14 @@
 
             <h1 class="lang" key="registrar">Registrese para continuar</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="container2 needs-validation" novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,12}" required onchange="fieldsCompleted('nombre')">
+                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,12}" required >
+                            <!-- onchange="fieldsCompleted('nombre')" -->
                             <div class="invalid-feedback lang" key="pnombre">
                                 Ponga su nombre
                             </div>
@@ -35,7 +36,8 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}" required onchange="fieldsCompleted('apellidos')">
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}" required >
+                            <!-- onchange="fieldsCompleted('apellidos')" -->
                             <div class="invalid-feedback lang" key="papellidos">
                                 Ponga sus apellidos
                             </div>
@@ -44,7 +46,8 @@
                             <label for="contraseña">
                                 <h2 class="lang" key="contraseña">Contraseña </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required >
+                            <!-- onchange="fieldsCompleted('contraseña')" -->
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Ponga una contraseña (8 minimo, sin caracteres especiales)
                             </div>
@@ -53,7 +56,8 @@
                             <label for="contraseña">
                                 <h2 class="lang">Confirmación Contraseña </h2>
                             </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
+                            <!-- onchange="fieldsCompleted('contraseña')" -->
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Confirma la contraseña
                             </div>
@@ -62,7 +66,8 @@
                             <label for="correo">
                                 <h2 class="lang" key="correo">Correo </h2>
                             </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
+                            <input id="correo" name="correo" type="email" class="form-control campo" required >
+                            <!-- onchange="fieldsCompleted('email')" -->
                             <div class="invalid-feedback lang" key="pemail">
                                 Ponga su correo electronico
                             </div>
@@ -72,7 +77,8 @@
                             <label for="telefono">
                                 <h2 class="lang" key="Telefono">Telefono</h2>
                             </label>
-                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required onchange="fieldsCompleted('telefono')">
+                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required>
+                            <!-- onchange="fieldsCompleted('telefono')" -->
                             <div class="invalid-feedback lang" key="ptelefono">
                                 Ponga su telefono
                             </div>
@@ -81,7 +87,8 @@
                             <label for="fechanac">
                                 <h2 class="lang" key="fecha">Fecha nacimiento </h2>
                             </label>
-                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('fechanac')">
+                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required >
+                            <!-- onchange="fieldsCompleted('fechanac')" -->
                             <div class="invalid-feedback lang" key="pfecha">
                                 Seleccione su fecha de nacimiento
                             </div>
@@ -175,5 +182,7 @@ e.preventDefault();
         </div>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>

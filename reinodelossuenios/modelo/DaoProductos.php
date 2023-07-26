@@ -163,11 +163,9 @@ class DaoProductos extends DB
 
         $this->ConsultaDatos($consulta, $param);
 
-        if (count($this->filas) >0)     //Si devuelve una fila
-        {
-            $fila = $this->filas[0];
-
+        foreach ($this->filas as $fila) {
             $producto = new Producto();
+
             $producto->__set("id", $fila["id"]);
             $producto->__set("nombre", $fila["nombre"]);
             $producto->__set("descripcion", $fila["descripcion"]);
@@ -176,10 +174,10 @@ class DaoProductos extends DB
             $producto->__set("imagen", $fila["imagen"]);
             $producto->__set("proveedor", $fila["proveedor"]);
             $producto->__set("categoria", $fila["categoria"]);
-        } else {
-            $producto = NULL;
+            array_push($this->productos,$producto);   //Añadimos ese producto al array de objetos
+
         }
-        return $producto;  //Retorna un objeto tipo marca
+        return $this->productos;  //Retorna un objeto tipo marca
 
     }
     public function ActualizarStock($id,$cant)

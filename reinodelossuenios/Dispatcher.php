@@ -17,6 +17,22 @@ final class Dispatcher
      */
     public function dispatch()
     {
+        require_once "./modelo/DaoUsuarios.php";
+
+$dao = new DaoUsuarios("epiz_34180798_reinodelossuenios");
+        if (isset($_COOKIE["Usuario"])) {
+         $usu = $dao->Obtener($_COOKIE["Usuario"]);
+        
+             $_SESSION['Usuario'] = $usu->__get("idusuario");
+             $_SESSION['Nombre'] = $usu->__get("nombre");
+             $_SESSION['Apellidos'] = $usu->__get("apellidos");
+             $_SESSION['Contraseña'] = $usu->__get("contraseña");
+             $_SESSION['Telefono'] = $usu->__get("telefono");
+             $_SESSION['Correo'] = $usu->__get("correo");
+             $_SESSION['Fechanac'] = $usu->__get("fechanac");
+             $_SESSION['Rol'] = $usu->__get("rol");
+             $_SESSION['Dinero'] = $usu->__get("dinero");
+        }
         $url = "home";   // Por defecto es home
         $action = "index";  // La acción por defecto es el método index
         

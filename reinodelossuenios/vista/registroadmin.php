@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,19 +19,20 @@
 <body>
 
     <main>
-    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Usuario"]=="adm") : ?>
+
+    <?php if (isset($_SESSION["Usuario"]) && $_SESSION["Rol"]=="adm") : ?>
 
         <div class="container-sm">
 
             <h1 class="lang" key="registrar">Registrese para continuar</h1>
             <div class="container form">
-                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="was-validated container2" needs-validation novalidate>
+                <form id="form" action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post' class="needs-validation container2" novalidate>
                     <div class="container2">
                         <div class="mb-3 camp">
                             <label for="nombre ">
                                 <h2 class="lang" key="nombre">Nombre </h2>
                             </label>
-                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,12}" required onchange="fieldsCompleted('nombre')">
+                            <input id="nombre" name="nombre" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,12}" required>
                             <div class="invalid-feedback lang" key="pnombre">
                                 Ponga su nombre
                             </div>
@@ -36,7 +41,7 @@
                             <label for="apellidos">
                                 <h2 class="lang" key="apellidos">Apellidos </h2>
                             </label>
-                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}" required onchange="fieldsCompleted('apellidos')">
+                            <input id="apellidos" name="apellidos" type="text" class="form-control campo" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}[ ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]{4,24}" required>
                             <div class="invalid-feedback lang" key="papellidos">
                                 Ponga sus apellidos
                             </div>
@@ -45,7 +50,7 @@
                             <label for="contraseña">
                                 <h2 class="lang" key="contraseña">Contraseña </h2>
                             </label>
-                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña" name="contraseña" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Ponga una contraseña (8 minimo, sin caracteres especiales)
                             </div>
@@ -54,7 +59,7 @@
                             <label for="contraseña">
                                 <h2 class="lang">Confirmación Contraseña </h2>
                             </label>
-                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required onchange="fieldsCompleted('contraseña')">
+                            <input id="contraseña2" name="contraseña2" type="password" pattern="[0-9A-za-z]{8,24}" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pcontraseña">
                                 Confirma la contraseña
                             </div>
@@ -63,7 +68,7 @@
                             <label for="correo">
                                 <h2 class="lang" key="correo">Correo </h2>
                             </label>
-                            <input id="correo" name="correo" type="email" class="form-control campo" required onchange="fieldsCompleted('email')">
+                            <input id="correo" name="correo" type="email" class="form-control campo" required>
                             <div class="invalid-feedback lang" key="pemail">
                                 Ponga su correo electronico
                             </div>
@@ -73,7 +78,7 @@
                             <label for="telefono">
                                 <h2 class="lang" key="Telefono">Telefono</h2>
                             </label>
-                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required onchange="fieldsCompleted('telefono')">
+                            <input id="telefono" name="telefono" type="text" pattern="^(\+[0-9]{3})?\d{9}$" class="form-control campo_corto" required>
                             <div class="invalid-feedback lang" key="ptelefono">
                                 Ponga su telefono
                             </div>
@@ -82,7 +87,7 @@
                             <label for="fechanac">
                                 <h2 class="lang" key="fecha">Fecha nacimiento </h2>
                             </label>
-                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required onchange="fieldsCompleted('fechanac')">
+                            <input id="fechanac" name="fechanac" type="date" class="form-control campo_corto" required>
                             <div class="invalid-feedback lang" key="pfecha">
                                 Seleccione su fecha de nacimiento
                             </div>
@@ -91,7 +96,7 @@
                             <label for="rol">
                                 <h2 class="lang" key="rol">Rol </h2>
                             </label>
-                            <select name="rol">
+                            <select name="rol" required>
                                 <option value="user">Usuario</option>
                                 <option value="adm">Administrador</option>
                             </select>
@@ -101,19 +106,7 @@
 
                 </form>
                 <button onclick="location.href='http://reinodelossuenios.42web.io'" class="btn seccion">Volver</button>
-                <!-- <script>
-                let form=document.forms[0];
-                form.addEventListener("submit",function(e){
-e.preventDefault();
-                });
-                </script> -->
-                <!-- <script type="text/javascript">
-    function redirect()
-    {
-   
-    window.location.href="http://reinodelossuenios.42web.io/index.html";
-    }
-    </script> -->
+
                 <?php
                 require_once "../modelo/DaoUsuarios.php";
                 // require_once "display.php";
@@ -164,9 +157,11 @@ e.preventDefault();
             </div>
         </div>
         <?php else : ?>
-            <?php echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> "; ?>
+            <?php // echo "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://reinodelossuenios.42web.io/'> "; ?>
             <?php endif ; ?>
     </main>
 </body>
-
+<footer>
+<script src="../js/validation.js"></script>
+</footer>
 </html>
